@@ -1,5 +1,4 @@
 :root {
-  /* Paleta Light (Padrão) */
   --ufms-blue-dark: #003a70;
   --ufms-blue: #0056a3;
   --ufms-blue-light: #e8f1fa;
@@ -12,14 +11,11 @@
   --user-bubble-bg: #0056a3;
   --user-bubble-text: #ffffff;
   --online-green: #22c55e;
-  
-  /* Cores do Menu Oculto */
   --menu-bg: #ffffff;
   --theme-btn-bg: #ffffff;
   --theme-btn-hover: #f1f5f9;
 }
 
-/* Paleta Dark Mode */
 [data-theme="dark"] {
   --bg-page: #000000;
   --bg-chat: #121212;
@@ -52,7 +48,7 @@ body {
 
 .app-wrapper {
   width: 100%;
-  max-width: 780px; /* Layout focado novamente */
+  max-width: 780px; 
   height: 100dvh;
   background-color: var(--bg-chat);
   display: flex;
@@ -71,7 +67,6 @@ body {
   }
 }
 
-/* Cabeçalho */
 .chat-header {
   background: linear-gradient(135deg, var(--ufms-blue-dark), var(--ufms-blue));
   color: #ffffff;
@@ -147,7 +142,6 @@ body {
   background: rgba(255, 255, 255, 0.28);
 }
 
-/* Área de mensagens */
 .chat-messages {
   flex: 1;
   padding: 20px 16px;
@@ -206,6 +200,27 @@ body {
   color: #ffffff;
 }
 
+/* Botão do WhatsApp Integrado no Balão */
+.wpp-btn {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  background-color: #25D366;
+  color: #ffffff !important;
+  font-weight: bold !important;
+  text-decoration: none !important;
+  padding: 10px 18px;
+  border-radius: 8px;
+  margin-top: 8px;
+  transition: background-color 0.2s, transform 0.1s;
+  border: none;
+}
+
+.wpp-btn:hover {
+  background-color: #1EBE55;
+  transform: translateY(-1px);
+}
+
 .message-meta {
   display: flex;
   align-items: center;
@@ -228,7 +243,6 @@ body {
   font-weight: 500;
 }
 
-/* Indicador de digitação */
 .typing-indicator {
   display: inline-flex;
   align-items: center;
@@ -257,7 +271,6 @@ body {
   40% { transform: scale(1); opacity: 1; }
 }
 
-/* Rodapé / Input / Menu Flutuante */
 .chat-footer {
   position: relative;
   padding: 12px 16px;
@@ -267,7 +280,6 @@ body {
   transition: background-color 0.3s;
 }
 
-/* Menu Flutuante (Oculto) */
 .trending-menu {
   position: absolute;
   bottom: calc(100% + 10px);
@@ -355,7 +367,6 @@ body {
   font-weight: 600;
 }
 
-/* Formulário de Input */
 .chat-input-form {
   display: flex;
   gap: 8px;
