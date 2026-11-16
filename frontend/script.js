@@ -16,7 +16,6 @@ function getApiBaseUrl() {
 
 const API_BASE_URL = getApiBaseUrl();
 
-// Elementos do DOM
 const chatMessages = document.getElementById("chat-messages");
 const chatForm = document.getElementById("chat-form");
 const userInput = document.getElementById("user-input");
@@ -25,15 +24,12 @@ const clearChatBtn = document.getElementById("clear-chat-btn");
 const themeToggleBtn = document.getElementById("theme-toggle-btn");
 const statusDot = document.getElementById("status-dot");
 const statusText = document.getElementById("status-text");
-
-// Novos elementos do Menu Flutuante
 const toggleTrendingBtn = document.getElementById("toggle-trending-btn");
 const trendingMenu = document.getElementById("trending-menu");
 const topicsContainer = document.getElementById("topics-list-container");
 
 const DEFAULT_WELCOME = "Olá! Sou o assistente virtual da Secretaria Acadêmica da UFMS. Digite sua dúvida ou clique no [+] para ver os assuntos mais buscados.";
 
-// Base local para rankeamento dos temas (Ranking inicial dinâmico)
 let trendingTopics = [
   { text: "Matrícula", query: "Como fazer matrícula e rematrícula?", count: 12 },
   { text: "Histórico / Declaração", query: "Emitir histórico escolar e declaração", count: 9 },
@@ -62,9 +58,6 @@ async function loadLocalKnowledge() {
   }
 }
 
-/**
- * Lógica do Menu Flutuante
- */
 function renderTrendingMenu() {
   trendingTopics.sort((a, b) => b.count - a.count);
   topicsContainer.innerHTML = "";
@@ -104,16 +97,13 @@ function closeTrendingMenu() {
   toggleTrendingBtn.classList.remove("active");
 }
 
-// Eventos de clique para o Menu Oculto
 toggleTrendingBtn.addEventListener("click", toggleMenu);
 
-// Fecha o menu se clicar fora dele
 document.addEventListener("click", (e) => {
   if (!trendingMenu.contains(e.target) && !toggleTrendingBtn.contains(e.target)) {
     closeTrendingMenu();
   }
 });
-
 
 function computeTopicFromText(text) {
   const lowerText = text.toLowerCase();
@@ -143,8 +133,22 @@ function formatBotMessage(rawText) {
   const escaped = rawText
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-  const withBold = escaped.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-  return withBold.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+  
+  let text = escaped.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+  
+  // Substitui links comuns primeiro
+  text = text.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+  
+  // Substitui a tag [WPP_BTN] pelo botão HTML do WhatsApp
+  const wppHTML = `<a href="https://wa.me/556732910202" class="wpp-btn" target="_blank" rel="noopener noreferrer">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+    </svg> Falar no WhatsApp
+  </a>`;
+  
+  text = text.replace(/\[WPP_BTN\]/g, wppHTML);
+  
+  return text;
 }
 
 function getCurrentTime() {
@@ -247,7 +251,7 @@ async function sendMessage(messageText) {
       }
       appendMessage("bot", answer, { category: category + " (Local)" });
     } else {
-      appendMessage("bot", "⚠️ Sistema offline. Ligue (67) 3345-7000.", { category: "Erro" });
+      appendMessage("bot", "⚠️ Sistema offline. Tente contatar a secretaria.", { category: "Erro" });
     }
   } finally {
     userInput.disabled = false;
@@ -283,7 +287,7 @@ async function initChat() {
 
 chatForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  closeTrendingMenu(); // Esconde o menu ao enviar msg por texto
+  closeTrendingMenu(); 
   sendMessage(userInput.value);
 });
 
