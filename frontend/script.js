@@ -23,52 +23,49 @@ const userInput = document.getElementById("user-input");
 const sendBtn = document.getElementById("send-btn");
 const clearChatBtn = document.getElementById("clear-chat-btn");
 const themeToggleBtn = document.getElementById("theme-toggle-btn");
-const topicsContainer = document.getElementById("sidebar-topics-container");
 const statusDot = document.getElementById("status-dot");
 const statusText = document.getElementById("status-text");
 
-const DEFAULT_WELCOME = "Olá! Sou o assistente virtual da Secretaria Acadêmica da UFMS. Digite sua dúvida ou escolha um dos temas frequentes ao lado.";
+// Novos elementos do Menu Flutuante
+const toggleTrendingBtn = document.getElementById("toggle-trending-btn");
+const trendingMenu = document.getElementById("trending-menu");
+const topicsContainer = document.getElementById("topics-list-container");
+
+const DEFAULT_WELCOME = "Olá! Sou o assistente virtual da Secretaria Acadêmica da UFMS. Digite sua dúvida ou clique no [+] para ver os assuntos mais buscados.";
 
 // Base local para rankeamento dos temas (Ranking inicial dinâmico)
 let trendingTopics = [
-  { text: "Matrícula", query: "Como fazer matrícula e rematrícula?", count: 0 },
-  { text: "Histórico / Declaração", query: "Emitir histórico escolar e declaração", count: 0 },
-  { text: "Trancamento", query: "Como funciona o trancamento?", count: 0 },
-  { text: "Estágio TCE", query: "Documentação de estágio", count: 0 },
-  { text: "Aproveitamento", query: "Aproveitamento de estudos", count: 0 },
-  { text: "Calendário", query: "Qual o calendário acadêmico?", count: 0 },
-  { text: "Passe / Carteirinha", query: "Passe estudantil e carteirinha", count: 0 },
+  { text: "Matrícula", query: "Como fazer matrícula e rematrícula?", count: 12 },
+  { text: "Histórico / Declaração", query: "Emitir histórico escolar e declaração", count: 9 },
+  { text: "Trancamento", query: "Como funciona o trancamento?", count: 7 },
+  { text: "Estágio TCE", query: "Documentação de estágio", count: 5 },
+  { text: "Aproveitamento", query: "Aproveitamento de estudos", count: 3 },
+  { text: "Calendário", query: "Qual o calendário acadêmico?", count: 2 },
+  { text: "Passe / Carteirinha", query: "Passe estudantil e carteirinha", count: 1 },
   { text: "Contatos", query: "Telefone e contato da secretaria", count: 1 },
   { text: "Passaporte UFMS", query: "Esqueci a senha do passaporte", count: 0 },
   { text: "Siscad", query: "Como acessar o Siscad?", count: 0 }
 ];
 
-// Variável para armazenar o JSON localmente
 let localKnowledgeBase = null;
 
-// Função para remover acentos e normalizar o texto para as buscas
 function normalizeText(text) {
   return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 }
 
-/**
- * Carrega o JSON localmente para servir como Motor de Resposta Fallback
- */
 async function loadLocalKnowledge() {
   try {
     const res = await fetch("knowledge_base.json");
-    if (res.ok) {
-      localKnowledgeBase = await res.json();
-    }
+    if (res.ok) localKnowledgeBase = await res.json();
   } catch (e) {
     console.error("Falha ao carregar o JSON local:", e);
   }
 }
 
 /**
- * Renderiza a barra lateral ordenando do maior pro menor count
+ * Lógica do Menu Flutuante
  */
-function renderSidebarTopics() {
+function renderTrendingMenu() {
   trendingTopics.sort((a, b) => b.count - a.count);
   topicsContainer.innerHTML = "";
   
@@ -78,12 +75,13 @@ function renderSidebarTopics() {
     btn.innerHTML = `
       <span class="theme-rank">${index + 1}</span>
       <span class="theme-text">${topic.text}</span>
-      <span class="theme-score" title="Buscado ${topic.count} vezes">${topic.count}</span>
+      <span class="theme-score">${topic.count}</span>
     `;
     
     btn.addEventListener("click", () => {
       topic.count++;
-      renderSidebarTopics();
+      closeTrendingMenu();
+      renderTrendingMenu();
       sendMessage(topic.query);
     });
 
@@ -91,18 +89,42 @@ function renderSidebarTopics() {
   });
 }
 
+function toggleMenu() {
+  const isShowing = trendingMenu.classList.contains("show");
+  if (isShowing) {
+    closeTrendingMenu();
+  } else {
+    trendingMenu.classList.add("show");
+    toggleTrendingBtn.classList.add("active");
+  }
+}
+
+function closeTrendingMenu() {
+  trendingMenu.classList.remove("show");
+  toggleTrendingBtn.classList.remove("active");
+}
+
+// Eventos de clique para o Menu Oculto
+toggleTrendingBtn.addEventListener("click", toggleMenu);
+
+// Fecha o menu se clicar fora dele
+document.addEventListener("click", (e) => {
+  if (!trendingMenu.contains(e.target) && !toggleTrendingBtn.contains(e.target)) {
+    closeTrendingMenu();
+  }
+});
+
+
 function computeTopicFromText(text) {
   const lowerText = text.toLowerCase();
   let updated = false;
-
   trendingTopics.forEach(topic => {
     if (lowerText.includes(topic.text.toLowerCase()) || lowerText.includes(topic.query.toLowerCase())) {
       topic.count++;
       updated = true;
     }
   });
-
-  if (updated) renderSidebarTopics();
+  if (updated) renderTrendingMenu();
 }
 
 function initTheme() {
@@ -112,24 +134,17 @@ function initTheme() {
 
 themeToggleBtn.addEventListener("click", () => {
   const root = document.documentElement;
-  const isDark = root.getAttribute("data-theme") === "dark";
-  const newTheme = isDark ? "light" : "dark";
+  const newTheme = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
   root.setAttribute("data-theme", newTheme);
   localStorage.setItem("ufms-bot-theme", newTheme);
 });
 
 function formatBotMessage(rawText) {
   const escaped = rawText
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&#039;");
   const withBold = escaped.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-  return withBold.replace(
-    /(https?:\/\/[^\s<]+)/g,
-    '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
-  );
+  return withBold.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
 }
 
 function getCurrentTime() {
@@ -172,7 +187,7 @@ function showTypingIndicator() {
   row.className = "message-row bot";
   row.id = "typing-row";
   row.innerHTML = `
-    <div class="typing-indicator" aria-label="Assistente digitando">
+    <div class="typing-indicator">
       <span></span><span></span><span></span>
     </div>
   `;
@@ -202,32 +217,26 @@ async function sendMessage(messageText) {
   showTypingIndicator();
 
   try {
-    // Tenta comunicar com o backend Python primeiro
     const response = await fetch(`${API_BASE_URL}/api/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: trimmed }),
     });
 
-    if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
+    if (!response.ok) throw new Error(`Erro HTTP`);
     
     const data = await response.json();
     removeTypingIndicator();
-    appendMessage("bot", data.response, {
-      category: data.category,
-      confidence: data.confidence,
-    });
+    appendMessage("bot", data.response, { category: data.category });
 
   } catch (error) {
     removeTypingIndicator();
     
-    // SISTEMA LOCAL ENTRA EM AÇÃO
     if (localKnowledgeBase) {
       const textNorm = normalizeText(trimmed);
       let answer = localKnowledgeBase.bot_info.fallback_message;
       let category = "Encaminhamento";
 
-      // Motor de processamento JavaScript (Varre o JSON)
       for (const intent of localKnowledgeBase.intents) {
         const match = intent.keywords.some(kw => textNorm.includes(normalizeText(kw)));
         if (match) {
@@ -236,14 +245,9 @@ async function sendMessage(messageText) {
           break;
         }
       }
-      
-      appendMessage("bot", answer, { category: category + " (Modo Local)" });
+      appendMessage("bot", answer, { category: category + " (Local)" });
     } else {
-      appendMessage(
-        "bot",
-        "⚠️ Servidor offline e Base de Dados não encontrada. Tente entrar em contato pelo telefone (67) 3345-7000.",
-        { category: "Erro" }
-      );
+      appendMessage("bot", "⚠️ Sistema offline. Ligue (67) 3345-7000.", { category: "Erro" });
     }
   } finally {
     userInput.disabled = false;
@@ -254,10 +258,9 @@ async function sendMessage(messageText) {
 
 async function initChat() {
   chatMessages.innerHTML = "";
-  renderSidebarTopics();
+  renderTrendingMenu();
   initTheme();
   
-  // Inicializa o JSON local antes de tentar conectar
   await loadLocalKnowledge();
   
   try {
@@ -269,22 +272,20 @@ async function initChat() {
       appendMessage("bot", info.welcome_message || DEFAULT_WELCOME, { category: "Boas-vindas" });
       return;
     }
-    throw new Error("Backend não respondeu corretamente");
+    throw new Error("Backend falhou");
   } catch (err) {
     statusDot.style.backgroundColor = "#f59e0b";
     statusText.textContent = "Modo Local Ativado";
     const welcome = localKnowledgeBase ? localKnowledgeBase.bot_info.welcome_message : DEFAULT_WELCOME;
-    appendMessage("bot", welcome, { category: "Boas-vindas (Modo Local)" });
+    appendMessage("bot", welcome, { category: "Boas-vindas (Local)" });
   }
 }
 
 chatForm.addEventListener("submit", (event) => {
   event.preventDefault();
+  closeTrendingMenu(); // Esconde o menu ao enviar msg por texto
   sendMessage(userInput.value);
 });
 
-clearChatBtn.addEventListener("click", () => {
-  initChat();
-});
-
+clearChatBtn.addEventListener("click", initChat);
 window.addEventListener("DOMContentLoaded", initChat);
