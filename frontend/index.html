@@ -20,53 +20,59 @@
           </span>
         </div>
       </div>
-      <button type="button" id="clear-chat-btn" class="clear-btn" title="Limpar conversa">
-        Limpar
-      </button>
+      <div class="header-actions">
+        <!-- Botão Dark Mode -->
+        <button type="button" id="theme-toggle-btn" class="header-btn" title="Alternar tema">
+          🌓
+        </button>
+        <!-- Botão Limpar -->
+        <button type="button" id="clear-chat-btn" class="header-btn" title="Limpar conversa">
+          Limpar
+        </button>
+      </div>
     </header>
 
-    <!-- Barra de Atalhos Rápidos -->
-    <section class="quick-topics" aria-label="Sugestões de assuntos">
-      <div class="topics-scroll" id="topics-container">
-        <button class="topic-chip" data-query="Como fazer matrícula e rematrícula?">Matrícula</button>
-        <button class="topic-chip" data-query="Emitir histórico escolar e declaração">Histórico / Declaração</button>
-        <button class="topic-chip" data-query="Como funciona o trancamento?">Trancamento</button>
-        <button class="topic-chip" data-query="Documentação de estágio">Estágio</button>
-        <button class="topic-chip" data-query="Aproveitamento de estudos">Aproveitamento</button>
-        <button class="topic-chip" data-query="Qual o calendário acadêmico?">Calendário</button>
-        <button class="topic-chip" data-query="Passe estudantil e carteirinha">Passe / Carteirinha</button>
-        <button class="topic-chip" data-query="Telefone e contato da secretaria">Contatos</button>
+    <!-- Estrutura com Chat e Sidebar -->
+    <div class="content-wrapper">
+      
+      <!-- Miolo do Chat -->
+      <div class="chat-main">
+        <main class="chat-messages" id="chat-messages" aria-live="polite">
+          <!-- Mensagens inseridas via JavaScript -->
+        </main>
+
+        <footer class="chat-footer">
+          <form id="chat-form" class="chat-input-form" autocomplete="off">
+            <input
+              type="text"
+              id="user-input"
+              placeholder="Digite sua dúvida (ex: como fazer rematrícula?)..."
+              maxlength="500"
+              required
+              aria-label="Digite sua dúvida acadêmica"
+            />
+            <button type="submit" id="send-btn" aria-label="Enviar mensagem">
+              <span>Enviar</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </form>
+        </footer>
       </div>
-    </section>
 
-    <!-- Área de Mensagens -->
-    <main class="chat-messages" id="chat-messages" aria-live="polite">
-      <!-- Mensagens inseridas via JavaScript -->
-    </main>
+      <!-- Barra Lateral de Temas Recorrentes -->
+      <aside class="sidebar-themes" aria-label="Temas mais buscados">
+        <div class="sidebar-header">Mais Buscados</div>
+        <div class="topics-list" id="sidebar-topics-container">
+          <!-- Botões injetados via JS dinamicamente pelo ranking -->
+        </div>
+      </aside>
 
-    <!-- Formulário de Envio -->
-    <footer class="chat-footer">
-      <form id="chat-form" class="chat-input-form" autocomplete="off">
-        <input
-          type="text"
-          id="user-input"
-          placeholder="Digite sua dúvida (ex: como fazer rematrícula?)..."
-          maxlength="500"
-          required
-          aria-label="Digite sua dúvida acadêmica"
-        />
-        <button type="submit" id="send-btn" aria-label="Enviar mensagem">
-          <span>Enviar</span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="22" y1="2" x2="11" y2="13"></line>
-            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-          </svg>
-        </button>
-      </form>
-    </footer>
+    </div>
   </div>
 
   <script src="script.js"></script>
 </body>
 </html>
-
