@@ -1,181 +1,75 @@
 {
   "bot_info": {
     "name": "Assistente Acadêmico UFMS",
-    "welcome_message": "Olá! Sou o assistente virtual da Secretaria Acadêmica da UFMS. Digite sua dúvida sobre matrícula, histórico, trancamento, estágio, calendário acadêmico ou passe estudantil.",
-    "fallback_message": "Desculpe, não consegui encontrar uma resposta exata para a sua dúvida. Por favor, tente reformular com outras palavras ou entre em contato diretamente com a Secretaria Acadêmica pelo telefone (67) 3345-7000 ou pelo e-mail secretaria@ufms.br."
+    "welcome_message": "Olá! Sou o assistente virtual da Secretaria Acadêmica da UFMS. Digite sua dúvida ou clique no [+] para ver os assuntos mais buscados.",
+    "fallback_message": "Desculpe, não consegui encontrar uma resposta exata para a sua dúvida. Por favor, entre em contato diretamente com a Secretaria Acadêmica:\n\n📧 **E-mail:** secac.cpcx@ufms.br\n\n[WPP_BTN]"
   },
   "intents": [
     {
       "id": "saudacao",
       "category": "Interação Inicial",
-      "keywords": [
-        "oi",
-        "ola",
-        "bom dia",
-        "boa tarde",
-        "boa noite",
-        "tudo bem",
-        "ajuda",
-        "menu",
-        "opcoes",
-        "inicio"
-      ],
+      "keywords": ["oi", "ola", "bom dia", "boa tarde", "boa noite", "tudo bem", "ajuda", "menu", "opcoes", "inicio"],
       "response": "Olá! Como posso ajudar você hoje? Você pode perguntar sobre:\n• Matrícula e Rematrícula\n• Trancamento de curso ou disciplina\n• Histórico Escolar e Declaração de Matrícula\n• Estágio Obrigatório e Não Obrigatório\n• Aproveitamento de Estudos\n• Calendário Acadêmico\n• Passe do Estudante e Carteirinha\n• Contatos da Secretaria"
     },
     {
       "id": "matricula_rematricula",
       "category": "Matrícula e Rematrícula",
-      "keywords": [
-        "matricula",
-        "rematricula",
-        "renovar matricula",
-        "renovacao",
-        "fazer matricula",
-        "ajuste de matricula",
-        "portal do aluno",
-        "siscad",
-        "disciplinas",
-        "grade"
-      ],
+      "keywords": ["matricula", "rematricula", "renovar matricula", "renovacao", "fazer matricula", "ajuste de matricula", "portal do aluno", "siscad", "disciplinas", "grade"],
       "response": "A matrícula e a rematrícula semestral são realizadas exclusivamente de forma online pelo **Portal do Aluno (SISCAD)**: https://siscad.ufms.br/\n\n📌 **Como fazer:**\n1. Acesse o SISCAD com seu Passaporte UFMS.\n2. Vá no menu **Matrícula > Renovação de Matrícula**.\n3. Selecione as disciplinas desejadas dentro do prazo previsto no Calendário Acadêmico e confirme o envio."
     },
     {
       "id": "historico_declaracao",
       "category": "Documentos e Declarações",
-      "keywords": [
-        "historico",
-        "historico escolar",
-        "declaracao",
-        "declaracao de matricula",
-        "atestado de matricula",
-        "comprovante de matricula",
-        "emitir documento",
-        "documento",
-        "assinatura digital"
-      ],
+      "keywords": ["historico", "historico escolar", "declaracao", "declaracao de matricula", "atestado de matricula", "comprovante de matricula", "emitir documento", "documento", "assinatura digital"],
       "response": "Você pode emitir seu **Histórico Escolar** e a **Declaração de Vínculo/Matrícula** diretamente pelo Portal do Aluno (SISCAD), com validação eletrônica imediata:\n\n🔗 Acesse: https://siscad.ufms.br/\n📂 Caminho: **Menu Documentos > Emitir Declarações / Histórico Escolar**."
     },
     {
       "id": "trancamento",
       "category": "Trancamento e Cancelamento",
-      "keywords": [
-        "trancar",
-        "trancamento",
-        "trancar faculdade",
-        "trancar curso",
-        "trancar disciplina",
-        "trancar materia",
-        "suspender matricula",
-        "parar curso"
-      ],
+      "keywords": ["trancar", "trancamento", "trancar faculdade", "trancar curso", "trancar disciplina", "trancar materia", "suspender matricula", "parar curso"],
       "response": "O **trancamento de matrícula** (em disciplina ou no semestre) deve ser solicitado pelo SISCAD dentro do prazo estipulado no Calendário Acadêmico.\n\n🔗 Acesse: https://siscad.ufms.br/\n📂 Caminho: **Requerimentos > Novo Requerimento > Trancamento**.\n\n⚠️ *Atenção:* Ingressantes no 1º semestre letivo possuem restrições para trancamento geral, salvo casos previstos no Regulamento de Graduação."
     },
     {
       "id": "estagio",
       "category": "Estágio",
-      "keywords": [
-        "estagio",
-        "termo de compromisso",
-        "tce",
-        "estagio obrigatorio",
-        "estagio nao obrigatorio",
-        "contrato de estagio",
-        "assinatura estagio",
-        "relatorio de estagio"
-      ],
+      "keywords": ["estagio", "termo de compromisso", "tce", "estagio obrigatorio", "estagio nao obrigatorio", "contrato de estagio", "assinatura estagio", "relatorio de estagio"],
       "response": "Os documentos de **Estágio (TCE, Plano de Atividades e Relatórios)** devem ser tramitados via sistema e submetidos à Comissão de Estágio do seu curso.\n\n📌 **Passo a passo básico:**\n1. Preencha o Termo de Compromisso de Estágio (TCE) com os dados da concedente e do professor orientador.\n2. Envie a documentação pelo sistema acadêmico (SISCAD / SEI) com antecedência mínima antes do início das atividades.\n🔗 Mais informações: https://prograd.ufms.br/"
     },
     {
       "id": "aproveitamento_disciplinas",
       "category": "Aproveitamento de Estudos",
-      "keywords": [
-        "aproveitamento",
-        "dispensa de disciplina",
-        "equivalencia",
-        "convalidar",
-        "convalidacao",
-        "ementa",
-        "Aproveitamento de estudos"
-      ],
+      "keywords": ["aproveitamento", "dispensa de disciplina", "equivalencia", "convalidar", "convalidacao", "ementa", "Aproveitamento de estudos"],
       "response": "Para solicitar **Aproveitamento de Estudos (equivalência de disciplinas)** cursadas anteriormente:\n\n1. Acesse o **SISCAD** (https://siscad.ufms.br/) dentro do prazo do Calendário Acadêmico.\n2. Abra um requerimento de **Aproveitamento de Estudos**.\n3. Anexe o **Histórico Escolar oficial** e o **Plano de Ensino (Ementa)** autenticado da instituição de origem."
     },
     {
       "id": "calendario_academico",
       "category": "Calendário e Prazos",
-      "keywords": [
-        "calendario",
-        "calendario academico",
-        "prazos",
-        "inicio das aulas",
-        "fim do semestre",
-        "ferias",
-        "datas",
-        "quando comeca"
-      ],
+      "keywords": ["calendario", "calendario academico", "prazos", "inicio das aulas", "fim do semestre", "ferias", "datas", "quando comeca"],
       "response": "O **Calendário Acadêmico da UFMS** com todas as datas de matrícula, ajustes, trancamentos, início e término do semestre letivo pode ser consultado na página da PROGRAD:\n\n🔗 https://prograd.ufms.br/calendario-academico/"
     },
     {
       "id": "passe_estudantil_identidade",
       "category": "Assistência e Identidade Estudantil",
-      "keywords": [
-        "passe",
-        "passe estudantil",
-        "passe do estudante",
-        "carteirinha",
-        "identidade estudantil",
-        "onibus",
-        "transporte",
-        "meia entrada"
-      ],
+      "keywords": ["passe", "passe estudantil", "passe do estudante", "carteirinha", "identidade estudantil", "onibus", "transporte", "meia entrada"],
       "response": "Para informações sobre **Identidade Estudantil (Carteirinha)** e **Passe do Estudante**:\n\n• **Carteirinha Digital:** Pode ser acessada pelo aplicativo oficial ou no portal do estudante.\n• **Passe Estudantil:** Certifique-se de estar regularmente matriculado no semestre atual no SISCAD e consulte as orientações da PROAES em https://proaes.ufms.br/"
     },
     {
       "id": "passaporte_senha",
       "category": "Acesso e Suporte Técnico",
-      "keywords": [
-        "senha",
-        "passaporte",
-        "passaporte ufms",
-        "esqueci a senha",
-        "login",
-        "acesso",
-        "email institucional",
-        "ava",
-        "moodle"
-      ],
+      "keywords": ["senha", "passaporte", "passaporte ufms", "esqueci a senha", "login", "acesso", "email institucional", "ava", "moodle"],
       "response": "Problemas com o **Passaporte UFMS** (login no SISCAD, AVA/Moodle ou e-mail institucional)?\n\n🔑 Você pode recuperar ou alterar sua senha em: https://passaporte.ufms.br/\nCaso não consiga acesso, entre em contato com o suporte da AGETIC: https://agetic.ufms.br/"
     },
     {
       "id": "contato_secretaria",
       "category": "Atendimento e Contatos",
-      "keywords": [
-        "telefone",
-        "contato",
-        "email",
-        "horario de funcionamento",
-        "horario",
-        "atendimento",
-        "secretaria",
-        "coordenacao",
-        "falar com atendente",
-        "humano"
-      ],
-      "response": "📞 **Canais de Atendimento da Secretaria Acadêmica:**\n• **Telefone:** (67) 3345-7000\n• **E-mail:** secretaria@ufms.br\n• **Horário de atendimento presencial:** Segunda a sexta-feira, das 07h30 às 11h30 e das 13h30 às 17h30."
+      "keywords": ["telefone", "contato", "email", "horario de funcionamento", "horario", "atendimento", "secretaria", "coordenacao", "falar com atendente", "humano", "whatsapp", "wpp"],
+      "response": "📞 **Canais de Atendimento da Secretaria Acadêmica:**\n\n📧 **E-mail:** secac.cpcx@ufms.br\n\n[WPP_BTN]\n\n🕒 **Horário de atendimento:** Segunda a sexta-feira, das 07h30 às 11h30 e das 13h30 às 17h30."
     },
     {
       "id": "agradecimento",
       "category": "Finalização",
-      "keywords": [
-        "obrigado",
-        "obrigada",
-        "valeu",
-        "agradece",
-        "tchau",
-        "ate mais",
-        "era so isso"
-      ],
+      "keywords": ["obrigado", "obrigada", "valeu", "agradece", "tchau", "ate mais", "era so isso"],
       "response": "Por nada! 😊 Se precisar de mais alguma informação sobre a secretaria acadêmica, é só mandar mensagem. Bons estudos!"
     }
   ]
 }
-
