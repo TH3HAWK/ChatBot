@@ -31,16 +31,15 @@ const topicsContainer = document.getElementById("topics-list-container");
 const DEFAULT_WELCOME = "Olá! Sou o assistente virtual da Secretaria Acadêmica da UFMS. Digite sua dúvida ou clique no [+] para ver os assuntos mais buscados.";
 
 let trendingTopics = [
-  { text: "Matrícula", query: "Como fazer matrícula e rematrícula?", count: 12 },
-  { text: "Histórico / Declaração", query: "Emitir histórico escolar e declaração", count: 9 },
+  { text: "Matrícula", query: "Como fazer matrícula?", count: 12 },
+  { text: "Tipos de Requerimentos", query: "Quais os tipos de requerimento?", count: 10 },
+  { text: "Histórico / Declaração", query: "Emitir histórico escolar", count: 9 },
   { text: "Trancamento", query: "Como funciona o trancamento?", count: 7 },
+  { text: "Acesso ao Siscad", query: "Link do siscad", count: 6 },
   { text: "Estágio TCE", query: "Documentação de estágio", count: 5 },
-  { text: "Aproveitamento", query: "Aproveitamento de estudos", count: 3 },
+  { text: "Acesso ao Sicert", query: "Certificados ufms sicert", count: 4 },
   { text: "Calendário", query: "Qual o calendário acadêmico?", count: 2 },
-  { text: "Passe / Carteirinha", query: "Passe estudantil e carteirinha", count: 1 },
-  { text: "Contatos", query: "Telefone e contato da secretaria", count: 1 },
-  { text: "Passaporte UFMS", query: "Esqueci a senha do passaporte", count: 0 },
-  { text: "Siscad", query: "Como acessar o Siscad?", count: 0 }
+  { text: "Contatos e Whatsapp", query: "Telefone e contato da secretaria", count: 1 }
 ];
 
 let localKnowledgeBase = null;
@@ -51,7 +50,7 @@ function normalizeText(text) {
 
 async function loadLocalKnowledge() {
   try {
-    const res = await fetch("knowledge_base.json");
+    const res = await fetch("knowledge_base_2.json");
     if (res.ok) localKnowledgeBase = await res.json();
   } catch (e) {
     console.error("Falha ao carregar o JSON local:", e);
@@ -136,17 +135,27 @@ function formatBotMessage(rawText) {
   
   let text = escaped.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
   
-  // Substitui links comuns primeiro
+  // Substitui links
   text = text.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
   
-  // Substitui a tag [WPP_BTN] pelo botão HTML do WhatsApp
+  // Substitui WhatsApp
   const wppHTML = `<a href="https://wa.me/556732910202" class="wpp-btn" target="_blank" rel="noopener noreferrer">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
     </svg> Falar no WhatsApp
   </a>`;
-  
   text = text.replace(/\[WPP_BTN\]/g, wppHTML);
+  
+  // Botões de Ação Interativos (Sim/Não)
+  text = text.replace(/\[ACTION_BTN:(.+?)\|(.+?)\]/g, '<button type="button" class="chat-action-btn" onclick="window.sendMessage(\'$1\')">$2</button>');
+  
+  // Saudação Dinâmica por Horário
+  const hora = new Date().getHours();
+  let saudacao = "um excelente dia";
+  if (hora >= 12 && hora < 18) saudacao = "uma excelente tarde";
+  else if (hora >= 18 || hora < 5) saudacao = "uma excelente noite";
+  
+  text = text.replace(/\[SAUDACAO\]/g, saudacao);
   
   return text;
 }
@@ -259,6 +268,9 @@ async function sendMessage(messageText) {
     userInput.focus();
   }
 }
+
+// Expõe a função globalmente para que os botões injetados no HTML funcionem
+window.sendMessage = sendMessage;
 
 async function initChat() {
   chatMessages.innerHTML = "";
