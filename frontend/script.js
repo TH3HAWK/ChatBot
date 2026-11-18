@@ -34,12 +34,12 @@ const STORAGE_KEY = "@UFMS_Chat_Trending";
 
 // Base inicial (Seed) para o primeiro acesso
 const seedTopics = [
-  { text: "Acesso ao SISCAD", query: "Link do siscad", count: 50 },
-  { text: "Tipos de Requerimentos", query: "Quais os tipos de requerimento?", count: 45 },
-  { text: "Histórico / Declaração", query: "Emitir histórico escolar", count: 40 },
-  { text: "Matrícula", query: "Como fazer matrícula?", count: 35 },
-  { text: "Trancamento", query: "Como funciona o trancamento?", count: 30 },
-  { text: "Acesso ao SICERT", query: "Certificados ufms sicert", count: 20 }
+  { text: "Acesso ao SISCAD", query: "Link do siscad", count: 0 },
+  { text: "Tipos de Requerimentos", query: "Quais os tipos de requerimento?", count: 0 },
+  { text: "Histórico / Declaração", query: "Emitir histórico escolar", count: 0 },
+  { text: "Matrícula", query: "Como fazer matrícula?", count: 0 },
+  { text: "Trancamento", query: "Como funciona o trancamento?", count: 0 },
+  { text: "Acesso ao SICERT", query: "Certificados ufms sicert", count: 0 }
 ];
 
 function getTrendingTopics() {
