@@ -1,7 +1,7 @@
 {
   "bot_info": {
     "name": "Assistente Acadêmico UFMS",
-    "welcome_message": "Olá. Sou o assistente virtual da Secretaria Acadêmica da UFMS. Digite sua dúvida ou utilize o menu lateral para acessar os temas frequentes.",
+    "welcome_message": "Olá! Como posso ajudar você hoje? Você pode me perguntar sobre ou escolher uma opção:\n\n[ACTION_BTN:Matrícula|Matrícula e Rematrícula]\n[ACTION_BTN:Trancamento|Trancamento de curso ou disciplina]\n[ACTION_BTN:Histórico Escolar|Histórico Escolar e Declaração de Matrícula]\n[ACTION_BTN:Estágio|Estágio Obrigatório e Não Obrigatório]\n[ACTION_BTN:Aproveitamento|Aproveitamento de Estudos]\n[ACTION_BTN:Calendário|Calendário Acadêmico]\n[ACTION_BTN:Passe do Estudante|Passe do Estudante e Carteirinha]\n[ACTION_BTN:Contatos da Secretaria|Contatos da Secretaria]",
     "fallback_message": "Não localizei uma correspondência exata para a sua solicitação. Para evitar informações incorretas, recomendo o contato direto com a Secretaria Acadêmica:\n\n[ICON_MAIL] **E-mail:** secac.cpcx@ufms.br\n\n[WPP_BTN]"
   },
   "intents": [
@@ -9,7 +9,7 @@
       "id": "saudacao",
       "category": "Interação Inicial",
       "keywords": ["oi", "ola", "bom dia", "boa tarde", "boa noite", "tudo bem", "ajuda", "menu", "opcoes", "inicio"],
-      "response": "Olá! Como posso ajudar você hoje? Você pode digitar sua dúvida no campo abaixo ou clicar diretamente em uma das opções:\n\n[ACTION_BTN:matricula|Matrícula e Rematrícula]\n[ACTION_BTN:req trancamento|Trancamento de Curso ou Disciplina]\n[ACTION_BTN:historico|Histórico e Declaração de Matrícula]\n[ACTION_BTN:estagio|Estágio Obrigatório e Não Obrigatório]\n[ACTION_BTN:req aproveitamento|Aproveitamento de Estudos]\n[ACTION_BTN:calendario|Calendário Acadêmico]\n[ACTION_BTN:passe estudantil|Passe do Estudante e Carteirinha]\n[ACTION_BTN:contato secretaria|Contatos da Secretaria]"
+      "response": "Olá! Como posso ajudar você hoje? Você pode me perguntar sobre ou escolher uma opção:\n\n[ACTION_BTN:Matrícula|Matrícula e Rematrícula]\n[ACTION_BTN:Trancamento|Trancamento de curso ou disciplina]\n[ACTION_BTN:Histórico Escolar|Histórico Escolar e Declaração de Matrícula]\n[ACTION_BTN:Estágio|Estágio Obrigatório e Não Obrigatório]\n[ACTION_BTN:Aproveitamento|Aproveitamento de Estudos]\n[ACTION_BTN:Calendário|Calendário Acadêmico]\n[ACTION_BTN:Passe do Estudante|Passe do Estudante e Carteirinha]\n[ACTION_BTN:Contatos da Secretaria|Contatos da Secretaria]"
     },
     {
       "id": "siscad_abrangente",
@@ -51,7 +51,7 @@
       "id": "requerimento_acesso_login",
       "category": "Requerimentos (Nuvem de Botões)",
       "keywords": ["requerimento acesso", "aluno", "ex-aluno", "estudante especial"],
-      "response": "Em seguida, realize o login no sistema utilizando seu Passaporte UFMS.\n\n*(Caso não tenha o passaporte ou tenha perdido seu acesso, recupere através deste link: https://passaporte.ufms.br/#/)*\n\nQual desses requerimentos você precisa fazer?\n\n[ACTION_BTN:req abreviacao curso|Abreviação de Curso]\n[ACTION_BTN:req colacao|Adiantamento de Colação]\n[ACTION_BTN:req ajuste|Ajustes de Matrícula]\n[ACTION_BTN:req atestado|Atestados e Declarações]\n[ACTION_BTN:req biblioteca|Biblioteca (Bloqueios)]\n[ACTION_BTN:req ccnd|Submissão CCND]\n[ACTION_BTN:req dilaçao|Dilação de Prazo]\n[ACTION_BTN:req aproveitamento|Dispensa e Aproveitamento]\n[ACTION_BTN:req trancamento|Trancamento de Matrícula]\n[ACTION_BTN:req revisao prova|Revisão de Prova]\n[ACTION_BTN:req regime especial|Regime Especial]\n[ACTION_BTN:req outros documentos|Outros Requerimentos]"
+      "response": "Em seguida, realize o login no sistema utilizando seu Passaporte UFMS.\n\n*(Caso não tenha o passaporte ou tenha perdido seu acesso, recupere através deste link: https://passaporte.ufms.br/#/)*\n\nQual desses requerimentos você precisa fazer?\n\n[ACTION_BTN:req abreviacao curso|Abreviação de Curso]\n[ACTION_BTN:req colacao|Adiantamento de Colação]\n[ACTION_BTN:req ajuste|Ajustes de Matrícula]\n[ACTION_BTN:req atestado|Atestados e Declarações]\n[ACTION_BTN:req biblioteca|Biblioteca (Bloqueios)]\n[ACTION_BTN:req ccnd|Submissão CCND]\n[ACTION_BTN:req dilaçao|Dilação de Prazo]\n[ACTION_BTN:Aproveitamento|Dispensa e Aproveitamento]\n[ACTION_BTN:Trancamento|Trancamento de Matrícula]\n[ACTION_BTN:req revisao prova|Revisão de Prova]\n[ACTION_BTN:req regime especial|Regime Especial]\n[ACTION_BTN:req outros documentos|Outros Requerimentos]"
     },
     {
       "id": "req_abreviacao_curso",
@@ -62,7 +62,7 @@
     {
       "id": "req_aproveitamento",
       "category": "Requerimentos (Aproveitamento/Dispensa)",
-      "keywords": ["req aproveitamento", "dispensa de disciplina", "aproveitar materia"],
+      "keywords": ["req aproveitamento", "aproveitamento", "dispensa de disciplina", "aproveitar materia"],
       "response": "[ICON_INFO] **Dispensa de Disciplina e Aproveitamento de Estudos**\nUtilizado para validar disciplinas cursadas em outros cursos ou instituições.\n\n**O que precisa:**\n- Histórico Escolar oficial.\n- Planos de Ensino (Ementas) originais carimbados.\n\n**Modelo de Preenchimento:**\n> \"Solicito a análise e o aproveitamento de estudos da disciplina [NOME DA DISCIPLINA], cursada na [INSTITUIÇÃO], para fins de dispensa da disciplina [NOME DA DISCIPLINA NA UFMS], conforme ementa e histórico anexos.\""
     },
     {
@@ -74,7 +74,7 @@
     {
       "id": "req_trancamento",
       "category": "Requerimento Específico (Trancamento)",
-      "keywords": ["req trancamento", "como trancar", "suspender curso", "trancamento", "trancar"],
+      "keywords": ["req trancamento", "trancamento", "como trancar", "suspender curso", "trancar"],
       "response": "[ICON_INFO] **Trancamento de Curso / Matrícula**\nO trancamento suspende temporariamente seu vínculo.\n\n[ICON_WARNING] Atenção: Consulte o calendário vigente antes de solicitar.\n\n**O que precisa:**\n- Ingressantes necessitam comprovar motivo de força maior (saúde, serviço militar, etc). Veteranos requerem apenas a solicitação.\n\n**Modelo de Preenchimento:**\n> \"Solicito o trancamento total de minha matrícula no semestre vigente em virtude de [MOTIVO], estando ciente dos prazos e resoluções acadêmicas.\""
     },
     {
@@ -104,7 +104,7 @@
     {
       "id": "historico_abrangente",
       "category": "Documentos (Histórico e Declarações)",
-      "keywords": ["historico", "declaracao", "comprovante", "atestado de matricula", "historico escolar"],
+      "keywords": ["historico", "historico escolar", "declaracao", "comprovante", "atestado de matricula"],
       "response": "A emissão de Histórico Escolar e Declarações de Vínculo ocorre com validação eletrônica automática no SISCAD.\n\n[ICON_LINK] Acesse: https://siscad.ufms.br/\n\nPrecisa de instruções sobre onde localizar a emissão destes documentos no sistema?\n\n[ACTION_BTN:Como emitir historico|Sim, mostrar caminho de emissão]\n[ACTION_BTN:Não possuo mais dúvidas|Não, era apenas o link]"
     },
     {
