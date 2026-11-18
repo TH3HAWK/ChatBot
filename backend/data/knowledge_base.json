@@ -57,19 +57,19 @@
       "id": "passaporte_senha",
       "category": "Acesso e Suporte Técnico",
       "keywords": ["senha", "passaporte", "passaporte ufms", "esqueci a senha", "login", "acesso", "email institucional", "ava", "moodle"],
-      "response": "Problemas com o **Passaporte UFMS** (login no SISCAD, AVA/Moodle ou e-mail institucional)?\n\n🔑 Você pode recuperar ou alterar sua senha em: https://passaporte.ufms.br/\nCaso não consiga acesso, entre em contato com o suporte da AGETIC: https://agetic.ufms.br/"
+      "response": "Problemas com o **Passaporte UFMS** (login no SISCAD, AVA/Moodle ou e-mail institucional)?\n\n Você pode recuperar ou alterar sua senha em: https://passaporte.ufms.br/\nCaso não consiga acesso, entre em contato com o suporte da AGETIC: https://agetic.ufms.br/"
     },
     {
       "id": "contato_secretaria",
       "category": "Atendimento e Contatos",
       "keywords": ["telefone", "contato", "email", "horario de funcionamento", "horario", "atendimento", "secretaria", "coordenacao", "falar com atendente", "humano", "whatsapp", "wpp"],
-      "response": "📞 **Canais de Atendimento da Secretaria Acadêmica:**\n\n📧 **E-mail:** secac.cpcx@ufms.br\n\n[WPP_BTN]\n\n🕒 **Horário de atendimento:** Segunda a sexta-feira, das 07h30 às 11h30 e das 13h30 às 17h30."
+      "response": "**Canais de Atendimento da Secretaria Acadêmica:**\n\n**E-mail:** secac.cpcx@ufms.br\n\n[WPP_BTN]\n\n🕒 **Horário de atendimento:** Segunda a sexta-feira, das 07h30 às 11h30 e das 13h30 às 17h30."
     },
     {
       "id": "agradecimento",
       "category": "Finalização",
       "keywords": ["obrigado", "obrigada", "valeu", "agradece", "tchau", "ate mais", "era so isso"],
-      "response": "Por nada! 😊 Se precisar de mais alguma informação sobre a secretaria acadêmica, é só mandar mensagem. Bons estudos!"
+      "response": "Por nada! Se precisar de mais alguma informação sobre a secretaria acadêmica, é só mandar mensagem. Bons estudos!"
     }
   ]
 }
