@@ -58,6 +58,7 @@ body {
   }
 }
 
+/* HEADER */
 .chat-header {
   background: linear-gradient(135deg, var(--ufms-blue-dark), var(--ufms-blue));
   color: #ffffff; padding: 16px 24px; display: flex;
@@ -80,6 +81,7 @@ body {
 }
 .header-btn:hover { background: rgba(255, 255, 255, 0.15); }
 
+/* MESSAGES */
 .chat-messages {
   flex: 1; padding: 24px 20px; overflow-y: auto;
   display: flex; flex-direction: column; gap: 16px; scroll-behavior: smooth;
@@ -117,8 +119,8 @@ body {
    ------------------------------------------- */
 .action-buttons-wrapper {
   display: flex;
-  flex-direction: column; /* Empilha verticalmente */
-  align-items: flex-start; /* Alinha à esquerda */
+  flex-direction: column; /* Força o empilhamento vertical */
+  align-items: flex-start; /* Mantém colado na esquerda */
   gap: 8px; 
   margin-top: 14px; 
 }

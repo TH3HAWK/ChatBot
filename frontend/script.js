@@ -10,7 +10,6 @@ function getApiBaseUrl() {
 
 const API_BASE_URL = getApiBaseUrl();
 
-// Elementos do DOM
 const dom = {
   messages: document.getElementById("chat-messages"),
   form: document.getElementById("chat-form"),
@@ -25,21 +24,16 @@ const dom = {
   topicsContainer: document.getElementById("topics-list-container")
 };
 
-const DEFAULT_WELCOME = "Olá! Sou o assistente virtual da Secretaria Acadêmica da UFMS. Digite sua dúvida ou clique no menu lateral de atalhos.";
+const DEFAULT_WELCOME = "Olá! Como posso ajudar você hoje? Você pode me perguntar sobre ou escolher uma opção:\n\n[ACTION_BTN:Matrícula|Matrícula e Rematrícula]\n[ACTION_BTN:Trancamento|Trancamento de curso ou disciplina]\n[ACTION_BTN:Histórico Escolar|Histórico Escolar e Declaração de Matrícula]\n[ACTION_BTN:Estágio|Estágio Obrigatório e Não Obrigatório]\n[ACTION_BTN:Aproveitamento|Aproveitamento de Estudos]\n[ACTION_BTN:Calendário|Calendário Acadêmico]\n[ACTION_BTN:Passe do Estudante|Passe do Estudante e Carteirinha]\n[ACTION_BTN:Contatos da Secretaria|Contatos da Secretaria]";
 
-// ----------------------------------------------------------------------
-// GESTÃO DE ESTADO (Local Storage Persistence)
-// ----------------------------------------------------------------------
 const STORAGE_KEY = "@UFMS_Chat_Trending";
-
-// Base inicial (Seed) para o primeiro acesso
 const seedTopics = [
-  { text: "Acesso ao SISCAD", query: "Link do siscad", count: 0 },
-  { text: "Tipos de Requerimentos", query: "Quais os tipos de requerimento?", count: 0 },
-  { text: "Histórico / Declaração", query: "Emitir histórico escolar", count: 0 },
-  { text: "Matrícula", query: "Como fazer matrícula?", count: 0 },
-  { text: "Trancamento", query: "Como funciona o trancamento?", count: 0 },
-  { text: "Acesso ao SICERT", query: "Certificados ufms sicert", count: 0 }
+  { text: "Acesso ao SISCAD", query: "Link do siscad", count: 50 },
+  { text: "Tipos de Requerimentos", query: "Quais os tipos de requerimento?", count: 45 },
+  { text: "Histórico / Declaração", query: "Emitir histórico escolar", count: 40 },
+  { text: "Matrícula", query: "Como fazer matrícula?", count: 35 },
+  { text: "Trancamento", query: "Como funciona o trancamento?", count: 30 },
+  { text: "Acesso ao SICERT", query: "Certificados ufms sicert", count: 20 }
 ];
 
 function getTrendingTopics() {
@@ -54,9 +48,6 @@ function saveTrendingTopics(topics) {
 let trendingTopics = getTrendingTopics();
 let localKnowledgeBase = null;
 
-// ----------------------------------------------------------------------
-// UTILITÁRIOS
-// ----------------------------------------------------------------------
 function normalizeText(text) {
   return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 }
@@ -66,13 +57,10 @@ async function loadLocalKnowledge() {
     const res = await fetch("knowledge_base.json");
     if (res.ok) localKnowledgeBase = await res.json();
   } catch (e) {
-    console.warn("Modo Offline: Falha ao carregar fallback local.");
+    console.warn("Modo Offline ativado.");
   }
 }
 
-// ----------------------------------------------------------------------
-// RENDERIZAÇÃO DE INTERFACE
-// ----------------------------------------------------------------------
 function renderTrendingMenu() {
   trendingTopics.sort((a, b) => b.count - a.count);
   dom.topicsContainer.innerHTML = "";
@@ -98,8 +86,7 @@ function renderTrendingMenu() {
 }
 
 function toggleMenu() {
-  const isShowing = dom.menu.classList.contains("show");
-  isShowing ? closeTrendingMenu() : openTrendingMenu();
+  dom.menu.classList.contains("show") ? closeTrendingMenu() : openTrendingMenu();
 }
 
 function openTrendingMenu() {
@@ -141,9 +128,6 @@ dom.themeBtn.addEventListener("click", () => {
   localStorage.setItem("ufms-bot-theme", newTheme);
 });
 
-// ----------------------------------------------------------------------
-// PARSER INTELIGENTE DE RESPOSTAS (Markdown e Componentes UI)
-// ----------------------------------------------------------------------
 const ICONS = {
   LINK: `<svg class="svg-icon" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>`,
   INFO: `<svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`,
@@ -158,45 +142,45 @@ function formatBotMessage(rawText) {
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;").replace(/'/g, "&#039;");
   
-  // Formatadores de Texto
   text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
   text = text.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
-  
-  // Blockquotes (Citações e Modelos de Requerimentos)
   text = text.replace(/^> (.*?)$/gm, '<blockquote class="chat-quote">$1</blockquote>');
   
-  // Substituição de Ícones
   Object.keys(ICONS).forEach(key => {
     const regex = new RegExp(`\\[ICON_${key}\\]`, 'g');
     text = text.replace(regex, ICONS[key]);
   });
 
-  // Saudação Temporal
   const hora = new Date().getHours();
   const saudacao = (hora >= 12 && hora < 18) ? "uma excelente tarde" : (hora >= 18 || hora < 5) ? "uma excelente noite" : "um excelente dia";
   text = text.replace(/\[SAUDACAO\]/g, saudacao);
 
-  // Botão WhatsApp
   const wppHTML = `<a href="https://wa.me/556732910202" class="wpp-btn" target="_blank">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> 
     Atendimento Humano
   </a>`;
   text = text.replace(/\[WPP_BTN\]/g, wppHTML);
   
-  // Conversão Inteligente de múltiplos Botões de Ação para um Grid Flexível
+  // PARSER ROBUSTO DOS BOTÕES (Sem quebrar a linha incorretamente)
   if (text.includes("[ACTION_BTN:")) {
-    const actionRegex = /\[ACTION_BTN:(.+?)\|(.+?)\]/g;
+    const actionRegex = /\[ACTION_BTN:([^|]+)\|([^\]]+)\]/g;
     let buttonsHTML = '<div class="action-buttons-wrapper">';
     let match;
+    let hasButtons = false;
+    
     while ((match = actionRegex.exec(text)) !== null) {
-      buttonsHTML += `<button type="button" class="chat-action-btn" onclick="window.sendMessage('${match[1]}')">${match[2]}</button>`;
+      hasButtons = true;
+      let actionVal = match[1].replace(/'/g, "\\'");
+      buttonsHTML += `<button type="button" class="chat-action-btn" onclick="window.sendMessage('${actionVal}')">${match[2]}</button>`;
     }
     buttonsHTML += '</div>';
-    text = text.replace(/\[ACTION_BTN:(.+?)\|(.+?)\]\n?/g, '').trim(); // Remove raw tags
-    text += buttonsHTML; // Anexa o grid formatado no final
+    
+    if (hasButtons) {
+      text = text.replace(/\[ACTION_BTN:[^\]]+\]\n?/g, '').trim();
+      text += buttonsHTML; 
+    }
   }
   
-  // Estruturação de Listas
   if (text.includes("•") || text.includes("- ")) {
     text = text.replace(/^(?:•|-)\s*(.*)$/gm, "<li>$1</li>");
     text = text.replace(/(<li>.*<\/li>(\s*<li>.*<\/li>)*)/g, '<ul class="chat-list">$1</ul>');
@@ -205,9 +189,6 @@ function formatBotMessage(rawText) {
   return text;
 }
 
-// ----------------------------------------------------------------------
-// CONTROLE DO CHAT
-// ----------------------------------------------------------------------
 function getCurrentTime() {
   return new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
 }
@@ -235,8 +216,7 @@ function appendMessage(sender, text, metaInfo = null) {
   row.appendChild(meta);
   dom.messages.appendChild(row);
   
-  // Timeout garante que scroll desça mesmo após renderizar botões e blocos complexos
-  setTimeout(() => dom.messages.scrollTop = dom.messages.scrollHeight, 10);
+  setTimeout(() => dom.messages.scrollTop = dom.messages.scrollHeight, 50);
 }
 
 function showTypingIndicator() {
@@ -281,7 +261,6 @@ async function sendMessage(messageText) {
   } catch (error) {
     removeTypingIndicator();
     
-    // Fallback Engine JS 
     if (localKnowledgeBase) {
       const textNorm = normalizeText(trimmed);
       let answer = localKnowledgeBase.bot_info.fallback_message;
@@ -321,7 +300,14 @@ async function initChat() {
       const info = await response.json();
       dom.statusDot.style.backgroundColor = "var(--online-green)";
       dom.statusText.textContent = "Online • Secretaria Acadêmica";
-      appendMessage("bot", info.welcome_message || DEFAULT_WELCOME, { category: "Sistemas Inativos" });
+      
+      const saudacaoReal = await fetch(`${API_BASE_URL}/api/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: "inicio" })
+      }).then(r => r.json());
+      
+      appendMessage("bot", saudacaoReal.response, { category: "Boas-vindas" });
       return;
     }
     throw new Error("Backend Inválido");
@@ -333,9 +319,6 @@ async function initChat() {
   }
 }
 
-// ----------------------------------------------------------------------
-// EVENT LISTENERS
-// ----------------------------------------------------------------------
 dom.form.addEventListener("submit", (e) => {
   e.preventDefault();
   closeTrendingMenu(); 
