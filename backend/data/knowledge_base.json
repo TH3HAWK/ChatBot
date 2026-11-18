@@ -9,31 +9,25 @@
       "id": "saudacao",
       "category": "Interação Inicial",
       "keywords": ["oi", "ola", "bom dia", "boa tarde", "boa noite", "tudo bem", "ajuda", "menu", "opcoes", "inicio"],
-      "response": "Olá. Como posso guiar você hoje? Estou programado para auxiliar com:\n• Matrícula e Rematrícula\n• Trancamentos (Curso ou Disciplina)\n• Histórico Escolar e Declarações\n• Estágios e CCNDs\n• Requerimentos Acadêmicos\n• Calendário e Contatos"
+      "response": "Olá! Como posso ajudar você hoje? Você pode digitar sua dúvida no campo abaixo ou clicar diretamente em uma das opções:\n\n[ACTION_BTN:matricula|Matrícula e Rematrícula]\n[ACTION_BTN:req trancamento|Trancamento de Curso ou Disciplina]\n[ACTION_BTN:historico|Histórico e Declaração de Matrícula]\n[ACTION_BTN:estagio|Estágio Obrigatório e Não Obrigatório]\n[ACTION_BTN:req aproveitamento|Aproveitamento de Estudos]\n[ACTION_BTN:calendario|Calendário Acadêmico]\n[ACTION_BTN:passe estudantil|Passe do Estudante e Carteirinha]\n[ACTION_BTN:contato secretaria|Contatos da Secretaria]"
     },
     {
       "id": "siscad_abrangente",
       "category": "SISCAD (Abrangente)",
       "keywords": ["siscad", "portal do aluno", "acesso siscad", "entrar no siscad", "link do siscad"],
-      "response": "O Sistema Acadêmico (SISCAD) é o ambiente oficial de gestão do aluno.\n\n[ICON_LINK] Acesso Geral: https://siscad.ufms.br/\n\nDeseja acessar as rotas diretas para as funcionalidades do ambiente?\n\n[ACTION_BTN:Funcionalidades do SISCAD|Sim, mostrar opções diretas]\n[ACTION_BTN:Não possuo mais dúvidas|Não, era apenas o link]"
+      "response": "O Sistema Acadêmico (SISCAD) é o ambiente oficial de gestão do aluno.\n\n[ICON_LINK] Acesse em: https://siscad.ufms.br/\n\nPossui dúvidas sobre o ambiente do SISCAD?\n\n[ACTION_BTN:Funcionalidades do SISCAD|Sim, explicar o ambiente]\n[ACTION_BTN:Não possuo mais dúvidas|Não, era só isso]"
     },
     {
       "id": "siscad_especifico",
       "category": "SISCAD (Específico)",
-      "keywords": ["funcionalidades do siscad", "como usar o siscad", "opções do siscad", "o que tem no siscad", "mostrar opcoes diretas"],
-      "response": "[ICON_INFO] Utilize os links abaixo para acesso direto aos módulos do SISCAD:\n\n• **Dados Cadastrais:** [Atualize aqui](https://siscad.ufms.br/academico/atualizacao_dados)\n• **Questionário Socioeconômico:** [Acessar](https://siscad.ufms.br/posacademico/questionario)\n• **Meus Horários:** [Grade do semestre](https://siscad.ufms.br/academico/disciplinas/horarios)\n• **Minhas Disciplinas:** [Histórico e Notas](https://siscad.ufms.br/academico/disciplinas)\n• **Meus Documentos (Visualizar/Emitir):** [Acessar](https://siscad.ufms.br/academico/documentos)\n• **Minhas Refeições (Acesso RU):** [Consultar](https://siscad.ufms.br/academico/pages/refeicoes)\n• **CCNDs / Projetos TCC:** Ambiente para submeter certificados (Extensão, Ensino, Estágio). [Acessar módulo](https://siscad.ufms.br/academico/academico-ccnd-detalhe)"
+      "keywords": ["funcionalidades do siscad", "como usar o siscad", "opções do siscad"],
+      "response": "[ICON_INFO] Utilize os links abaixo para acesso direto aos módulos do SISCAD:\n\n• **Dados Cadastrais:** [Atualize aqui](https://siscad.ufms.br/academico/atualizacao_dados)\n• **Questionário Socioeconômico:** [Acessar](https://siscad.ufms.br/posacademico/questionario)\n• **Meus Horários:** [Grade do semestre](https://siscad.ufms.br/academico/disciplinas/horarios)\n• **Minhas Disciplinas:** [Histórico e Notas](https://siscad.ufms.br/academico/disciplinas)\n• **Meus Documentos (Visualizar/Emitir):** [Acessar](https://siscad.ufms.br/academico/documentos)\n• **Minhas Refeições (Acesso RU):** [Consultar](https://siscad.ufms.br/academico/pages/refeicoes)\n• **CCNDs / Projetos TCC:** [Acessar módulo](https://siscad.ufms.br/academico/academico-ccnd-detalhe)"
     },
     {
       "id": "matricula_abrangente",
       "category": "Matrícula e Calendário",
       "keywords": ["matricula", "rematricula", "renovacao", "como fazer matricula", "onde faço rematricula"],
-      "response": "As matrículas são realizadas estritamente de acordo com as datas do calendário vigente.\n\n[ICON_LINK] Realize a matrícula aqui: https://siscad.ufms.br/matricula\n\n[ICON_WARNING] Não perca os prazos! O calendário acadêmico completo pode ser encontrado neste link:\nhttps://prograd.ufms.br/calendario-academico/"
-    },
-    {
-      "id": "req_trancamento",
-      "category": "Requerimento Específico (Trancamento)",
-      "keywords": ["req trancamento", "como trancar", "suspender curso", "trancamento", "trancar"],
-      "response": "[ICON_INFO] **Trancamento de Curso / Matrícula**\nO trancamento pode ser realizado exclusivamente nas datas previstas.\n\n[ICON_WARNING] Consulte o calendário vigente antes de solicitar:\nhttps://prograd.ufms.br/calendario-academico/\n\n**Documentação:**\n- Ingressantes necessitam comprovar força maior (Art. 41, Res. 430/2021). Veteranos requerem apenas a solicitação.\n\n**Modelo de Preenchimento (Copie e Cole):**\n> \"Solicito o trancamento de minha matrícula no semestre vigente em virtude de [ESPECIFIQUE O MOTIVO], estando ciente dos prazos e resoluções do Calendário Acadêmico.\""
+      "response": "As matrículas são realizadas estritamente de acordo com as datas do calendário vigente.\n\n[ICON_LINK] Realize a matrícula aqui: https://siscad.ufms.br/matricula\n\n[ICON_WARNING] Não perca os prazos! O calendário acadêmico pode ser encontrado aqui: https://prograd.ufms.br/calendario-academico/"
     },
     {
       "id": "requerimento_raiz",
@@ -51,49 +45,103 @@
       "id": "requerimento_nao_perfil",
       "category": "Requerimentos (Seleção de Perfil)",
       "keywords": ["não sei fazer requerimento", "nao preciso de instrucoes", "ajuda requerimento"],
-      "response": "Sem problemas, eu te guio.\n\nPrimeiro, selecione o tipo de perfil de requerimento que se enquadra a você:\n\n[ACTION_BTN:Requerimento Acesso|Aluno]\n[ACTION_BTN:Requerimento Acesso|Ex-Aluno]\n[ACTION_BTN:Requerimento Acesso|Estudante Especial]\n[ACTION_BTN:Requerimento Acesso|Transferência Compulsória]"
+      "response": "Sem problemas, eu te guio.\n\nSelecione o tipo de perfil de requerimento que se enquadra a você:\n\n[ACTION_BTN:Requerimento Acesso|Aluno]\n[ACTION_BTN:Requerimento Acesso|Ex-Aluno]\n[ACTION_BTN:Requerimento Acesso|Estudante Especial]\n[ACTION_BTN:Requerimento Acesso|Transferência Compulsória]"
     },
     {
       "id": "requerimento_acesso_login",
-      "category": "Requerimentos (Passaporte e Lista)",
+      "category": "Requerimentos (Nuvem de Botões)",
       "keywords": ["requerimento acesso", "aluno", "ex-aluno", "estudante especial"],
-      "response": "[ICON_INFO] Em seguida, realize o login no sistema utilizando seu Passaporte UFMS.\n\n*(Caso não tenha o passaporte ou tenha perdido seu acesso, recupere através deste link: https://passaporte.ufms.br/#/)*\n\nQual destes requerimentos principais você precisa fazer?\n\n[ACTION_BTN:Req Abreviação Curso|Abreviação de Curso]\n[ACTION_BTN:Req Aproveitamento|Dispensa/Aproveitamento]\n[ACTION_BTN:Req Revisão Prova|Revisão de Prova]\n[ACTION_BTN:Req CCND|Submissão de CCND]\n[ACTION_BTN:Req Outros Documentos|Ver Outros Requerimentos]"
+      "response": "Em seguida, realize o login no sistema utilizando seu Passaporte UFMS.\n\n*(Caso não tenha o passaporte ou tenha perdido seu acesso, recupere através deste link: https://passaporte.ufms.br/#/)*\n\nQual desses requerimentos você precisa fazer?\n\n[ACTION_BTN:req abreviacao curso|Abreviação de Curso]\n[ACTION_BTN:req colacao|Adiantamento de Colação]\n[ACTION_BTN:req ajuste|Ajustes de Matrícula]\n[ACTION_BTN:req atestado|Atestados e Declarações]\n[ACTION_BTN:req biblioteca|Biblioteca (Bloqueios)]\n[ACTION_BTN:req ccnd|Submissão CCND]\n[ACTION_BTN:req dilaçao|Dilação de Prazo]\n[ACTION_BTN:req aproveitamento|Dispensa e Aproveitamento]\n[ACTION_BTN:req trancamento|Trancamento de Matrícula]\n[ACTION_BTN:req revisao prova|Revisão de Prova]\n[ACTION_BTN:req regime especial|Regime Especial]\n[ACTION_BTN:req outros documentos|Outros Requerimentos]"
     },
     {
       "id": "req_abreviacao_curso",
       "category": "Requerimentos (Abreviação)",
-      "keywords": ["req abreviação curso", "abreviacao de curso"],
-      "response": "[ICON_INFO] **Abreviação de Curso**\nDestinado a alunos com extraordinário aproveitamento nos estudos que desejam concluir a graduação em tempo inferior ao previsto.\n\n**O que precisa:**\n- Desempenho acadêmico excepcional comprovado (histórico).\n- Avaliação de banca especial.\n\n**Modelo de Preenchimento:**\n> \"Venho requerer a constituição de Banca Examinadora Especial para fins de avaliação e abreviação de curso, amparado pelo meu extraordinário desempenho acadêmico comprovado no histórico anexo.\""
+      "keywords": ["req abreviacao curso", "abreviacao de curso"],
+      "response": "[ICON_INFO] **Abreviação de Curso**\nDestinado a alunos com extraordinário aproveitamento nos estudos que desejam concluir a graduação em tempo inferior.\n\n**O que precisa:**\n- Desempenho acadêmico excepcional comprovado.\n- Avaliação de banca especial.\n\n**Modelo de Preenchimento:**\n> \"Venho requerer a constituição de Banca Examinadora Especial para fins de avaliação e abreviação de curso, amparado pelo meu extraordinário desempenho acadêmico comprovado no histórico anexo.\""
     },
     {
       "id": "req_aproveitamento",
       "category": "Requerimentos (Aproveitamento/Dispensa)",
       "keywords": ["req aproveitamento", "dispensa de disciplina", "aproveitar materia"],
-      "response": "[ICON_INFO] **Dispensa de Disciplina e Aproveitamento de Estudos**\nUtilizado para validar disciplinas cursadas em outros cursos ou instituições.\n\n**O que precisa:**\n- Histórico Escolar oficial da instituição de origem.\n- Planos de Ensino (Ementas) carimbados das disciplinas cursadas.\n\n**Modelo de Preenchimento:**\n> \"Solicito a análise e o aproveitamento de estudos da disciplina [NOME DA DISCIPLINA CURSADA], cursada na [NOME DA INSTITUIÇÃO], para fins de dispensa da disciplina [NOME DA DISCIPLINA NA UFMS], conforme ementa e histórico anexos.\""
+      "response": "[ICON_INFO] **Dispensa de Disciplina e Aproveitamento de Estudos**\nUtilizado para validar disciplinas cursadas em outros cursos ou instituições.\n\n**O que precisa:**\n- Histórico Escolar oficial.\n- Planos de Ensino (Ementas) originais carimbados.\n\n**Modelo de Preenchimento:**\n> \"Solicito a análise e o aproveitamento de estudos da disciplina [NOME DA DISCIPLINA], cursada na [INSTITUIÇÃO], para fins de dispensa da disciplina [NOME DA DISCIPLINA NA UFMS], conforme ementa e histórico anexos.\""
     },
     {
       "id": "req_revisao_prova",
       "category": "Requerimentos (Revisão)",
-      "keywords": ["req revisão prova", "revisão de prova primeira instancia"],
-      "response": "[ICON_INFO] **Revisão de Prova (1ª Instância)**\nUsado quando o aluno discorda da correção ou da nota atribuída em uma avaliação.\n\n**O que precisa:**\n- Cópia da prova (se houver).\n- Embargo técnico fundamentado demonstrando o erro na correção.\n\n**Modelo de Preenchimento:**\n> \"Requeiro a revisão da nota atribuída na avaliação [TIPO/DATA DA AVALIAÇÃO] da disciplina [NOME], sob a fundamentação técnica anexa, onde demonstro que a questão X encontra amparo na bibliografia Y da ementa.\""
+      "keywords": ["req revisao prova", "revisao de prova"],
+      "response": "[ICON_INFO] **Revisão de Prova (1ª e 2ª Instâncias)**\nUsado quando o aluno discorda da correção ou da nota atribuída.\n\n**O que precisa:**\n- Cópia da prova.\n- Embargo técnico fundamentado demonstrando o erro.\n\n**Modelo de Preenchimento:**\n> \"Requeiro a revisão da nota atribuída na avaliação [AVALIAÇÃO] da disciplina [NOME], sob a fundamentação técnica anexa, onde demonstro divergências na correção baseadas na ementa.\""
+    },
+    {
+      "id": "req_trancamento",
+      "category": "Requerimento Específico (Trancamento)",
+      "keywords": ["req trancamento", "como trancar", "suspender curso", "trancamento", "trancar"],
+      "response": "[ICON_INFO] **Trancamento de Curso / Matrícula**\nO trancamento suspende temporariamente seu vínculo.\n\n[ICON_WARNING] Atenção: Consulte o calendário vigente antes de solicitar.\n\n**O que precisa:**\n- Ingressantes necessitam comprovar motivo de força maior (saúde, serviço militar, etc). Veteranos requerem apenas a solicitação.\n\n**Modelo de Preenchimento:**\n> \"Solicito o trancamento total de minha matrícula no semestre vigente em virtude de [MOTIVO], estando ciente dos prazos e resoluções acadêmicas.\""
     },
     {
       "id": "req_ccnd",
       "category": "Requerimentos (CCND)",
       "keywords": ["req ccnd", "componente curricular nao disciplinar", "enviar horas"],
-      "response": "[ICON_INFO] **Componente Curricular Não Disciplinar (CCND)**\nUtilizado para registrar atividades extracurriculares, projetos, eventos ou monitorias que compõem sua carga horária obrigatória flexível.\n\n**O que precisa:**\n- Certificados oficiais (emitidos preferencialmente pelo SICERT).\n\n**Modelo de Preenchimento:**\n> \"Encaminho o(s) certificado(s) anexo(s) referente à participação no evento/projeto [NOME DO EVENTO], totalizando [X] horas, para fins de cômputo como Componente Curricular Não Disciplinar (CCND).\""
+      "response": "[ICON_INFO] **Componente Curricular Não Disciplinar (CCND)**\nUtilizado para registrar atividades extracurriculares que compõem sua carga horária.\n\n**O que precisa:**\n- Certificados oficiais.\n\n**Modelo de Preenchimento:**\n> \"Encaminho o(s) certificado(s) anexo(s) referente à participação no evento/projeto [NOME], totalizando [X] horas, para fins de cômputo como CCND.\""
     },
     {
       "id": "req_outros_documentos",
-      "category": "Requerimentos (Listagem Completa)",
+      "category": "Requerimentos (Geral)",
       "keywords": ["req outros documentos", "ver outros requerimentos", "lista de requerimentos"],
-      "response": "No portal de requerimentos, você também encontrará módulos para:\n\n• Adiantamento e Data para Colação de Grau\n• Ajustes de Matrícula (Validação)\n• Alterações de Notas (Docente)\n• Atestados (Boa Conduta, Frequência, Vaga)\n• Biblioteca (Bloqueio, Desbloqueio, Revalidação)\n• Desistência de Vaga\n• Dilação de prazo para Conclusão\n• Estágio e Guarda Religiosa\n• Mobilidade Acadêmica (Nacional/Internacional)\n• Permuta Interna Cursos Afins\n• Regime Especial\n• Retificação de Dados Pessoais\n\nBasta acessar o portal, realizar o login e selecionar a opção desejada na aba de Requerimentos."
+      "response": "No portal de Requerimentos do SISCAD, você também encontrará módulos interativos para:\n\n• Adiantamento e Data para Colação de Grau\n• Ajustes de Matrícula (Validação)\n• Alterações de Notas\n• Atestados Diversos\n• Biblioteca (Bloqueio e Revalidação)\n• Desistência de Vaga\n• Dilação de prazo para Conclusão\n• Mobilidade Acadêmica (Nacional/Internacional)\n• Regime Especial\n\nBasta acessar o portal, realizar o login e navegar pela lista oficial."
+    },
+    {
+      "id": "sicert_abrangente",
+      "category": "SICERT (Abrangente)",
+      "keywords": ["sicert", "certificados", "certificado ufms", "emitir certificado"],
+      "response": "O SICERT é o sistema de emissão e validação de certificados da UFMS.\n\n[ICON_LINK] Acesse em: https://certificados.ufms.br/home\n\nPossui dúvidas sobre como o SICERT funciona?\n\n[ACTION_BTN:Como funciona o Sicert|Sim, explicar o ambiente]\n[ACTION_BTN:Não possuo mais dúvidas|Não, era só o link]"
+    },
+    {
+      "id": "sicert_especifico",
+      "category": "SICERT (Específico)",
+      "keywords": ["como funciona o sicert", "como usar o sicert", "o que é ccnd"],
+      "response": "[ICON_INFO] Diretrizes de uso do SICERT:\n\n1. Acesse o sistema e faça a emissão do seu certificado (eventos, projetos).\n2. Para validação de **CCNDs** cumpridas na UFMS, baixe o documento e verifique se ele se configura como **Extensão** ou **Estágio**.\n3. Utilize este documento PDF em seus requerimentos de aproveitamento no SISCAD."
+    },
+    {
+      "id": "historico_abrangente",
+      "category": "Documentos (Histórico e Declarações)",
+      "keywords": ["historico", "declaracao", "comprovante", "atestado de matricula", "historico escolar"],
+      "response": "A emissão de Histórico Escolar e Declarações de Vínculo ocorre com validação eletrônica automática no SISCAD.\n\n[ICON_LINK] Acesse: https://siscad.ufms.br/\n\nPrecisa de instruções sobre onde localizar a emissão destes documentos no sistema?\n\n[ACTION_BTN:Como emitir historico|Sim, mostrar caminho de emissão]\n[ACTION_BTN:Não possuo mais dúvidas|Não, era apenas o link]"
+    },
+    {
+      "id": "historico_especifico",
+      "category": "Documentos (Emissão)",
+      "keywords": ["como emitir historico", "onde fica o historico", "passo a passo historico", "como tirar declaracao"],
+      "response": "[ICON_FOLDER] **Caminho para Emissão de Documentos no SISCAD:**\n\n1. Faça login na plataforma com o Passaporte UFMS.\n2. Acesse o menu superior: **Documentos**.\n3. Selecione a opção **Emitir Declarações** ou **Histórico Escolar**.\n4. O sistema gerará um arquivo PDF autenticado instantaneamente."
+    },
+    {
+      "id": "estagio_abrangente",
+      "category": "Estágios",
+      "keywords": ["estagio", "termo de compromisso", "tce", "estagio obrigatorio", "estagio nao obrigatorio", "relatorio de estagio"],
+      "response": "Os documentos de **Estágio (Obrigatório e Não Obrigatório)** são tramitados de forma sistêmica.\n\n[ICON_INFO] **Passo a passo básico:**\n1. Preencha o Termo de Compromisso de Estágio (TCE).\n2. Submeta a documentação com antecedência antes do início das atividades.\n\n[ICON_LINK] Obtenha os regulamentos na PROGRAD: https://prograd.ufms.br/"
+    },
+    {
+      "id": "calendario_academico",
+      "category": "Calendário Acadêmico",
+      "keywords": ["calendario", "prazos", "inicio das aulas", "fim do semestre", "ferias", "datas", "calendario academico"],
+      "response": "O **Calendário Acadêmico** dita todas as diretrizes de prazos da instituição.\n\n[ICON_LINK] Consulte as resoluções e datas oficiais aqui: https://prograd.ufms.br/calendario-academico/"
+    },
+    {
+      "id": "passe_estudantil",
+      "category": "Passe e Carteirinha",
+      "keywords": ["passe", "passe estudantil", "carteirinha", "meia entrada", "onibus", "transporte"],
+      "response": "Para informações sobre Identidade Estudantil e Passe do Estudante:\n\n[ICON_INFO] Certifique-se de estar com a matrícula ativa no semestre atual.\n[ICON_LINK] Acesse as orientações completas da PROAES: https://proaes.ufms.br/"
+    },
+    {
+      "id": "contato_secretaria",
+      "category": "Contatos Institucionais",
+      "keywords": ["telefone", "contato", "email", "horario de funcionamento", "atendimento", "secretaria", "contato secretaria"],
+      "response": "**Informações de Contato - Secretaria Acadêmica:**\n\n[ICON_MAIL] **E-mail Institucional:** secac.cpcx@ufms.br\n[ICON_CLOCK] **Expediente:** Segunda a Sexta-feira | 07h30 às 11h30 - 13h30 às 17h30.\n\n[WPP_BTN]"
     },
     {
       "id": "duvidas_nao",
       "category": "Encerramento",
       "keywords": ["não possuo mais dúvidas", "nao, era apenas o link", "obrigado", "obrigada", "valeu", "encerrar", "obg"],
-      "response": "Atendimento concluído. Desejo a você [SAUDACAO].\n\nCaso precise, basta me chamar novamente. Bons estudos!"
+      "response": "Atendimento concluído. Desejo a você [SAUDACAO].\n\nO ambiente virtual permanece à disposição para futuras consultas acadêmicas. Bons estudos!"
     }
   ]
 }
