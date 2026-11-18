@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,7 +12,9 @@
     <!-- Cabeçalho do Chat -->
     <header class="chat-header">
       <div class="header-brand">
-        <div class="bot-avatar" aria-hidden="true">UFMS</div>
+        <div class="bot-avatar" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+        </div>
         <div class="header-info">
           <h1 id="bot-title">Assistente Acadêmico</h1>
           <span class="status-badge">
@@ -22,11 +24,11 @@
         </div>
       </div>
       <div class="header-actions">
-        <button type="button" id="theme-toggle-btn" class="header-btn" title="Alternar tema">
-          🌓
+        <button type="button" id="theme-toggle-btn" class="header-btn" title="Alternar tema" aria-label="Alternar modo escuro">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
         </button>
-        <button type="button" id="clear-chat-btn" class="header-btn" title="Limpar conversa">
-          Limpar
+        <button type="button" id="clear-chat-btn" class="header-btn" title="Limpar conversa" aria-label="Limpar chat">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
         </button>
       </div>
     </header>
@@ -40,20 +42,16 @@
     <footer class="chat-footer">
       
       <!-- Menu Oculto de Temas Frequentes -->
-      <div class="trending-menu" id="trending-menu">
-        <div class="trending-header">Buscas Frequentes</div>
+      <aside class="trending-menu" id="trending-menu" aria-hidden="true">
+        <header class="trending-header">Buscas Frequentes</header>
         <div class="topics-list" id="topics-list-container">
           <!-- Botões injetados dinamicamente via JS -->
         </div>
-      </div>
+      </aside>
 
       <form id="chat-form" class="chat-input-form" autocomplete="off">
-        <!-- Botão "+" de acesso ao menu oculto -->
-        <button type="button" id="toggle-trending-btn" class="icon-btn" title="Temas Frequentes" aria-label="Temas Frequentes">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="5" x2="12" y2="19"></line>
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-          </svg>
+        <button type="button" id="toggle-trending-btn" class="icon-btn" title="Temas Frequentes" aria-label="Abrir temas frequentes">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
         </button>
 
         <input
@@ -62,15 +60,12 @@
           placeholder="Digite sua dúvida (ex: rematrícula)..."
           maxlength="500"
           required
-          aria-label="Digite sua dúvida acadêmica"
+          aria-label="Sua mensagem"
         />
         
         <button type="submit" id="send-btn" class="send-btn" aria-label="Enviar mensagem">
           <span>Enviar</span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="22" y1="2" x2="11" y2="13"></line>
-            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-          </svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
         </button>
       </form>
 
