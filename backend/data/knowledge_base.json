@@ -1,81 +1,99 @@
 {
   "bot_info": {
     "name": "Assistente Acadêmico UFMS",
-    "welcome_message": "Olá! Sou o assistente virtual da Secretaria Acadêmica da UFMS. Digite sua dúvida ou utilize o menu lateral para os temas mais acessados.",
-    "fallback_message": "Desculpe, não consegui encontrar uma resposta exata para a sua dúvida. Por favor, entre em contato diretamente com a Secretaria Acadêmica:\n\n[ICON_MAIL] **E-mail:** secac.cpcx@ufms.br\n\n[WPP_BTN]"
+    "welcome_message": "Olá. Sou o assistente virtual da Secretaria Acadêmica da UFMS. Digite sua dúvida ou utilize o menu lateral para acessar os temas frequentes.",
+    "fallback_message": "Não consegui identificar uma correspondência exata para a sua solicitação. Para evitar informações incorretas, recomendo o contato direto com a Secretaria Acadêmica:\n\n[ICON_MAIL] **E-mail:** secac.cpcx@ufms.br\n\n[WPP_BTN]"
   },
   "intents": [
     {
       "id": "saudacao",
       "category": "Interação Inicial",
       "keywords": ["oi", "ola", "bom dia", "boa tarde", "boa noite", "tudo bem", "ajuda", "menu", "opcoes", "inicio"],
-      "response": "Olá! Como posso ajudar você hoje? Você pode me perguntar sobre:\n• Matrícula e Rematrícula\n• Trancamento de curso ou disciplina\n• Histórico Escolar e Declaração de Matrícula\n• Estágio Obrigatório e Não Obrigatório\n• Aproveitamento de Estudos\n• Calendário Acadêmico\n• Passe do Estudante e Carteirinha\n• Contatos da Secretaria"
+      "response": "Olá. Como posso guiar você hoje? Estou programado para auxiliar com:\n• Matrícula e Rematrícula\n• Trancamentos (Curso ou Disciplina)\n• Histórico Escolar e Declarações\n• Estágios e CCNDs\n• Requerimentos Acadêmicos Gerais\n• Calendário e Contatos"
     },
     {
-      "id": "siscad_geral",
-      "category": "Portal do Aluno (SISCAD)",
+      "id": "siscad_abrangente",
+      "category": "SISCAD (Abrangente)",
       "keywords": ["siscad", "portal do aluno", "acesso siscad", "entrar no siscad", "link do siscad"],
-      "response": "O Sistema Acadêmico (SISCAD) é o seu ambiente principal. \n\n[ICON_LINK] Acesse em: https://siscad.ufms.br/\n\nPossui dúvidas sobre o ambiente do SISCAD?\n\n[ACTION_BTN:Sim, tenho dúvidas sobre o SISCAD|Sim, explicar o ambiente]\n[ACTION_BTN:Não, apenas o link|Não, era só isso]"
+      "response": "O Sistema Acadêmico (SISCAD) é o ambiente oficial de gestão do aluno.\n\n[ICON_LINK] Acesso: https://siscad.ufms.br/\n\nDeseja compreender as funcionalidades disponíveis neste ambiente?\n\n[ACTION_BTN:Funcionalidades do SISCAD|Sim, explicar o ambiente]\n[ACTION_BTN:Não possuo mais dúvidas|Não, era apenas o link]"
     },
     {
-      "id": "siscad_duvidas_sim",
-      "category": "Detalhes do SISCAD",
-      "keywords": ["sim, tenho dúvidas sobre o siscad", "como usar o siscad", "opções do siscad"],
-      "response": "[ICON_INFO] Aqui estão as principais funções disponíveis no SISCAD:\n\n• **Início / Dados Cadastrais / Questionário**\n• **Meus Horários:** É possível visualizar os horários das disciplinas do atual semestre.\n• **Minhas Disciplinas:** Permite visualizar as disciplinas divididas por semestres que foram ou estão sendo cursadas, bem como avaliações, frequências e planos de ensino.\n• **Meus Documentos:** Emissão de Documentos que podem ser usados em requerimentos.\n• **Minhas Refeições:** Se aplica a campus que possuem restaurantes universitários (RU).\n• **CCND:** Atividades cumpridas resultam em certificados no Sicert. Você deve baixar o certificado e verificar se configura como extensão ou estágio.\n• **Histórico Escolar**\n• **Autodeclaração do ENADE**\n• **Matrícula**\n• **Trancamento**\n• **Requerimento Acadêmico**"
+      "id": "siscad_especifico",
+      "category": "SISCAD (Específico)",
+      "keywords": ["funcionalidades do siscad", "como usar o siscad", "opções do siscad", "o que tem no siscad"],
+      "response": "[ICON_INFO] Funcionalidades principais do ambiente SISCAD:\n\n• **Meus Horários:** Visualização da grade do semestre vigente.\n• **Minhas Disciplinas:** Acompanhamento de avaliações, frequências e planos de ensino.\n• **Meus Documentos:** Emissão automatizada com validação eletrônica.\n• **Minhas Refeições:** Gestão de acesso aos Restaurantes Universitários (RU).\n• **Requerimentos Acadêmicos:** Abertura de protocolos diversos.\n• **Matrícula / Trancamento:** Operações de vínculo semestral."
     },
     {
-      "id": "sicert_geral",
-      "category": "Certificados (SICERT)",
+      "id": "sicert_abrangente",
+      "category": "SICERT (Abrangente)",
       "keywords": ["sicert", "certificados", "certificado ufms", "ccnd", "emitir certificado"],
-      "response": "O SICERT é o sistema de emissão de certificados da UFMS. \n\n[ICON_LINK] Acesse em: https://certificados.ufms.br/home\n\nPossui dúvidas sobre o ambiente do SICERT?\n\n[ACTION_BTN:Sim, como funciona o Sicert|Sim, explicar o ambiente]\n[ACTION_BTN:Não, apenas o link|Não, era só isso]"
+      "response": "O SICERT é o sistema de emissão e validação de certificados da UFMS.\n\n[ICON_LINK] Acesso: https://certificados.ufms.br/home\n\nDeseja informações sobre como classificar suas atividades (CCND) neste sistema?\n\n[ACTION_BTN:Como funciona o Sicert|Sim, explicar o ambiente]\n[ACTION_BTN:Não possuo mais dúvidas|Não, era apenas o link]"
     },
     {
-      "id": "sicert_sim",
-      "category": "Detalhes do SICERT",
-      "keywords": ["sim, como funciona o sicert", "como usar o sicert"],
-      "response": "[ICON_INFO] No SICERT, você emite seus certificados oficiais (eventos, palestras, projetos). \n\nPara as **CCNDs** cumpridas pela UFMS, baixe o certificado neste sistema e verifique se ele se configura como: **extensão** ou **estágio**."
+      "id": "sicert_especifico",
+      "category": "SICERT (Específico)",
+      "keywords": ["como funciona o sicert", "como usar o sicert", "explicar sicert", "o que é ccnd"],
+      "response": "[ICON_INFO] Diretrizes de uso do SICERT:\n\n1. Acesse o sistema e faça a emissão do seu certificado (eventos, projetos, palestras).\n2. Para validação de **CCNDs** cumpridas na UFMS, baixe o documento e verifique no rodapé ou descrição se a atividade se configura como **Extensão** ou **Estágio**.\n3. Utilize este documento em seus requerimentos de aproveitamento."
+    },
+    {
+      "id": "matricula_abrangente",
+      "category": "Matrícula (Abrangente)",
+      "keywords": ["matricula", "rematricula", "renovacao", "ajuste de matricula", "disciplinas", "grade"],
+      "response": "Os procedimentos de Matrícula e Rematrícula são realizados online.\n\n[ICON_LINK] Ambiente: https://siscad.ufms.br/\n\nNecessita das instruções passo a passo para realizar sua renovação de vínculo?\n\n[ACTION_BTN:Como fazer matricula|Sim, ver o passo a passo]\n[ACTION_BTN:Não possuo mais dúvidas|Não, era apenas o link]"
+    },
+    {
+      "id": "matricula_especifico",
+      "category": "Matrícula (Específico)",
+      "keywords": ["como fazer matricula", "passo a passo matricula", "onde faço rematricula", "instrucoes de matricula", "como renovar", "como incluir disciplina"],
+      "response": "[ICON_INFO] Instruções para Renovação de Matrícula:\n\n1. Acesse o SISCAD com seu Passaporte UFMS e senha.\n2. Navegue até o menu superior: **Matrícula > Renovação de Matrícula**.\n3. Selecione as disciplinas desejadas para o semestre.\n4. Salve e emita o comprovante.\n[ICON_WARNING] Verifique o Calendário Acadêmico. Fora do prazo oficial, o sistema bloqueará a operação."
+    },
+    {
+      "id": "requerimento_abrangente",
+      "category": "Requerimentos (Abrangente)",
+      "keywords": ["requerimento", "protocolo", "solicitar", "pedido", "abrir requerimento", "fazer requerimento"],
+      "response": "Os Requerimentos Acadêmicos são solicitações oficiais protocoladas via SISCAD.\n\n[ICON_LINK] Acesso: https://siscad.ufms.br/\n\nDeseja verificar a lista completa dos tipos de requerimentos disponíveis ou o passo a passo para abri-los?\n\n[ACTION_BTN:Tipos de requerimento|Ver lista de Requerimentos]\n[ACTION_BTN:Passo a passo requerimento|Ver passo a passo]\n[ACTION_BTN:Não possuo mais dúvidas|Encerrar atendimento]"
+    },
+    {
+      "id": "requerimento_especifico_passos",
+      "category": "Requerimentos (Passos)",
+      "keywords": ["passo a passo requerimento", "como abrir requerimento", "instrucoes de requerimento"],
+      "response": "[ICON_INFO] Passo a passo para abertura de Requerimentos:\n\n1. Faça login no SISCAD.\n2. Acesse o menu lateral ou superior: **Requerimentos > Novo Requerimento**.\n3. Escolha o *Tipo de Requerimento* apropriado à sua necessidade.\n4. Preencha a justificativa formal e anexe os documentos comprobatórios em formato PDF, se exigido.\n5. Confirme a submissão e anote o número de protocolo para acompanhamento."
+    },
+    {
+      "id": "requerimento_especifico_lista",
+      "category": "Requerimentos (Lista)",
+      "keywords": ["tipos de requerimento", "quais requerimentos", "lista de requerimentos"],
+      "response": "Abaixo estão os principais **Tipos de Requerimentos** suportados pelo sistema:\n\n• Aproveitamento de Estudos (Dispensa)\n• Atestados (Boa Conduta, Frequência, Vaga)\n• Biblioteca (Bloqueio, Desbloqueio, Revalidação)\n• CCND (Componente Curricular Não Disciplinar)\n• Colação de Grau (Data ou Adiantamento)\n• Desistência de Vaga\n• Dilação de Prazo para Conclusão\n• Estágio\n• Guarda Religiosa\n• Mobilidade Acadêmica (Nacional / Internacional)\n• Permuta Interna entre Cursos Afins\n• Plano de Estudos\n• Regime Especial\n• Retificação de Dados Pessoais\n• Revisão de Prova (1ª e 2ª instâncias)\n• SEI - Liberação de usuário externo\n• Trancamento de Matrícula"
+    },
+    {
+      "id": "historico_abrangente",
+      "category": "Documentos (Abrangente)",
+      "keywords": ["historico", "declaracao", "comprovante", "atestado de matricula"],
+      "response": "A emissão de Histórico Escolar e Declarações de Vínculo ocorre com validação eletrônica automática.\n\n[ICON_LINK] Acesso: https://siscad.ufms.br/\n\nPrecisa de instruções sobre onde localizar a emissão destes documentos?\n\n[ACTION_BTN:Como emitir historico|Sim, mostrar caminho]\n[ACTION_BTN:Não possuo mais dúvidas|Não, era apenas o link]"
+    },
+    {
+      "id": "historico_especifico",
+      "category": "Documentos (Específico)",
+      "keywords": ["como emitir historico", "onde fica o historico", "passo a passo historico", "como tirar declaracao"],
+      "response": "[ICON_FOLDER] Caminho para Emissão de Documentos no SISCAD:\n\n1. Faça login na plataforma.\n2. Acesse o menu superior: **Documentos**.\n3. Selecione a opção **Emitir Declarações** ou **Histórico Escolar**.\n4. O sistema gerará um arquivo PDF com um QR Code e código de autenticidade, dispensando assinaturas físicas da secretaria."
+    },
+    {
+      "id": "calendario_academico",
+      "category": "Calendário Acadêmico",
+      "keywords": ["calendario", "prazos", "inicio das aulas", "fim do semestre", "ferias", "datas", "quando comeca"],
+      "response": "O Calendário Acadêmico estabelece as diretrizes temporais da instituição.\n\n[ICON_LINK] Consulte as resoluções e datas oficiais em: https://prograd.ufms.br/calendario-academico/"
+    },
+    {
+      "id": "contato_secretaria",
+      "category": "Contatos Institucionais",
+      "keywords": ["telefone", "contato", "email", "horario de funcionamento", "horario", "atendimento", "secretaria", "coordenacao", "whatsapp", "wpp"],
+      "response": "**Informações de Contato - Secretaria Acadêmica:**\n\n[ICON_MAIL] **E-mail Institucional:** secac.cpcx@ufms.br\n[ICON_CLOCK] **Expediente:** Segunda a Sexta-feira | 07h30 às 11h30 - 13h30 às 17h30.\n\n[WPP_BTN]"
     },
     {
       "id": "duvidas_nao",
       "category": "Encerramento",
-      "keywords": ["não, apenas o link", "não, era só isso", "nao, obrigado", "nao possuo duvidas", "obrigado", "obrigada", "valeu"],
-      "response": "Perfeito! Desejo a você [SAUDACAO]!\n\nEstou sempre à disposição para ajudar. Bons estudos!"
-    },
-    {
-      "id": "requerimento_lista",
-      "category": "Requerimentos Acadêmicos",
-      "keywords": ["requerimento", "tipos de requerimento", "fazer requerimento", "abrir requerimento", "requerimento academico"],
-      "response": "Para solicitar um Requerimento Acadêmico, acesse o **SISCAD** e vá no menu correspondente.\n\nAbaixo estão os **Tipos de Requerimentos** disponíveis:\n• Abreviação de Curso\n• Adiantamento de Colação de Grau\n• Ajustes de matrícula - Etapa de validação\n• Alterações de Notas\n• Atestado de Boa Conduta\n• Atestado de Frequência de Atividades Escolares\n• Atestado de Vaga\n• Biblioteca: Revalidação de Cadastro (alteração de validade)\n• Biblioteca: Bloqueio de Cadastro\n• Biblioteca: Desbloqueio de Cadastro\n• Componente Curricular Não Disciplinar (CCND) - CURSANDO\n• Data para Colação de Grau\n• Declaração de Matrícula/Vínculo\n• Desistência de Vaga\n• Dilação de prazo para Conclusão do Curso\n• Disciplinas - Programas Didáticos\n• Dispensa de Disciplina e Aproveitamento de Estudos\n• Estágio\n• Guarda Religiosa\n• Histórico Escolar\n• Interposição de Recurso\n• Mobilidade Acadêmica Nacional\n• Mobilidade Acadêmica Internacional\n• Permuta Interna Cursos Afins\n• Plano de estudos\n• Recontagem de Frequência\n• Regime Especial\n• Reoferta de Disciplina\n• Retificação de Dados Pessoais\n• Revisão de Prova (primeira instância)\n• Revisão de Prova (segunda instância)\n• SEI - Liberação de usuário externo - assinatura de documentos\n• Trancamento de Matrícula - Ingressante (Somente em concordância com o Art. 41, Resolução Cograd nº 430/2021*)\n• Urgência na Expedição/Emissão do Diploma\n• Outros\n• Análise de Histórico\n• Caixa de Mensagens\n• Ajuda"
-    },
-    {
-      "id": "matricula_rematricula",
-      "category": "Matrícula e Rematrícula",
-      "keywords": ["matricula", "rematricula", "renovar matricula", "renovacao", "fazer matricula", "ajuste de matricula", "disciplinas", "grade"],
-      "response": "A matrícula e a rematrícula semestral são realizadas online pelo **Portal do Aluno (SISCAD)**.\n\n[ICON_INFO] **Como fazer:**\n1. Acesse o SISCAD com seu Passaporte UFMS.\n2. Vá no menu **Matrícula > Renovação de Matrícula**.\n3. Selecione as disciplinas desejadas dentro do prazo e confirme o envio."
-    },
-    {
-      "id": "historico_declaracao",
-      "category": "Documentos e Declarações",
-      "keywords": ["historico", "historico escolar", "declaracao", "declaracao de matricula", "atestado de matricula", "comprovante de matricula", "emitir documento"],
-      "response": "Você pode emitir seu **Histórico Escolar** e a **Declaração de Vínculo/Matrícula** diretamente pelo Portal do Aluno (SISCAD), com validação eletrônica imediata.\n\n[ICON_LINK] Acesse: https://siscad.ufms.br/\n[ICON_FOLDER] Caminho: **Menu Documentos > Emitir Declarações / Histórico Escolar**."
-    },
-    {
-      "id": "trancamento",
-      "category": "Trancamento e Cancelamento",
-      "keywords": ["trancar", "trancamento", "trancar faculdade", "trancar curso", "trancar disciplina", "trancar materia", "suspender matricula", "parar curso"],
-      "response": "O **trancamento de matrícula** (em disciplina ou no semestre) deve ser solicitado pelo SISCAD.\n\n[ICON_LINK] Acesse: https://siscad.ufms.br/\n[ICON_FOLDER] Caminho: **Requerimentos > Novo Requerimento > Trancamento**.\n\n[ICON_WARNING] *Atenção:* Ingressantes no 1º semestre possuem restrições para trancamento geral."
-    },
-    {
-      "id": "calendario_academico",
-      "category": "Calendário e Prazos",
-      "keywords": ["calendario", "calendario academico", "prazos", "inicio das aulas", "fim do semestre", "ferias", "datas", "quando comeca"],
-      "response": "O **Calendário Acadêmico da UFMS** com todas as datas oficiais (matrícula, ajustes, trancamentos, início e término do semestre letivo) pode ser consultado na página da PROGRAD.\n\n[ICON_LINK] https://prograd.ufms.br/calendario-academico/"
-    },
-    {
-      "id": "contato_secretaria",
-      "category": "Atendimento e Contatos",
-      "keywords": ["telefone", "contato", "email", "horario de funcionamento", "horario", "atendimento", "secretaria", "coordenacao", "falar com atendente", "humano", "whatsapp", "wpp"],
-      "response": "**Canais de Atendimento da Secretaria Acadêmica:**\n\n[ICON_MAIL] **E-mail:** secac.cpcx@ufms.br\n\n[WPP_BTN]\n\n[ICON_CLOCK] **Horário de atendimento:** Segunda a sexta-feira, das 07h30 às 11h30 e das 13h30 às 17h30."
+      "keywords": ["não possuo mais dúvidas", "nao, era apenas o link", "nao, obrigado", "obrigado", "obrigada", "valeu", "encerrar atendimento", "era so isso"],
+      "response": "Compreendido. Desejo a você [SAUDACAO].\n\nO atendimento virtual permanece à disposição para futuras consultas institucionais."
     }
   ]
 }

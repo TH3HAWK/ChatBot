@@ -1,189 +1,168 @@
 import json
-import os
 import re
 import unicodedata
 from difflib import SequenceMatcher
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 
 class NLPEngine:
     """
-    Motor de Processamento de Linguagem Natural (NLP) para o Chatbot Acadêmico.
-    Realiza limpeza de texto, remoção de acentos/pontuação, correspondência exata
-    e busca aproximada (fuzzy matching) para tolerar erros de digitação.
+    Motor Avançado de Processamento de Linguagem Natural.
+    Arquitetura desenvolvida para alta tolerância a falhas ortográficas (Fuzzy Matching)
+    e desambiguação de contexto baseada na densidade de tokens (Broad vs Specific Intents).
     """
 
-    def __init__(self, kb_path: Optional[str] = None, fuzzy_threshold: float = 0.78):
+    def __init__(self, kb_path: Optional[str] = None, fuzzy_threshold: float = 0.85):
         if kb_path is None:
             base_dir = Path(__file__).resolve().parent
-            self.kb_path = base_dir / "data" / "knowledge_base.json"
+            self.kb_path = base_dir / "knowledge_base.json"
         else:
             self.kb_path = Path(kb_path)
 
         self.fuzzy_threshold = fuzzy_threshold
-        self._last_mtime: float = 0.0
-        self.knowledge_base: Dict[str, Any] = {}
+        self._knowledge_base: Dict[str, Any] = {}
         self._load_knowledge_base()
 
     def _load_knowledge_base(self) -> None:
-        """
-        Carrega (ou recarrega automaticamente se modificado) o arquivo JSON da base de conhecimento.
-        Isso permite que a secretaria edite o JSON sem precisar reiniciar o servidor.
-        """
+        """Carrega a base de dados mantendo isolamento I/O."""
         if not self.kb_path.exists():
-            raise FileNotFoundError(f"Base de conhecimento não encontrada em: {self.kb_path}")
-
-        current_mtime = os.path.getmtime(self.kb_path)
-        if current_mtime != self._last_mtime or not self.knowledge_base:
-            with open(self.kb_path, "r", encoding="utf-8") as f:
-                self.knowledge_base = json.load(f)
-            self._last_mtime = current_mtime
+            raise FileNotFoundError(f"[ERROR] Base de conhecimento ausente no path: {self.kb_path}")
+            
+        with open(self.kb_path, "r", encoding="utf-8") as f:
+            self._knowledge_base = json.load(f)
 
     @staticmethod
     def normalize_text(text: str) -> str:
         """
-        Limpa o texto cru do aluno:
-        1. Converte para letras minúsculas
-        2. Remove acentuação (ex: 'matrícula' -> 'matricula')
-        3. Remove pontuações e caracteres especiais (ex: '!!!' -> '')
-        4. Remove espaços duplicados
+        Sanitização profunda de input:
+        - Decodificação ASCII (remoção de diacríticos/acentos).
+        - Eliminação de pontuações não-alfanuméricas.
+        - Redução de espaços em excesso.
         """
         if not text:
             return ""
 
         text = text.lower().strip()
         nfkd_form = unicodedata.normalize("NFKD", text)
-        without_accents = "".join(c for c in nfkd_form if not unicodedata.combining(c))
-        clean_text = re.sub(r"[^a-z0-9\s]", " ", without_accents)
+        clean_accents = "".join(c for c in nfkd_form if not unicodedata.combining(c))
+        clean_text = re.sub(r"[^a-z0-9\s]", " ", clean_accents)
         return re.sub(r"\s+", " ", clean_text).strip()
 
     @staticmethod
-    def _similarity(a: str, b: str) -> float:
-        """Calcula a similaridade entre duas strings (0.0 a 1.0)."""
+    def _calculate_similarity(a: str, b: str) -> float:
+        """Cálculo de Distância / Similaridade via SequenceMatcher."""
         return SequenceMatcher(None, a, b).ratio()
 
-    def _score_intent(self, clean_input: str, input_tokens: List[str], keywords: List[str]) -> Dict[str, Any]:
+    def _score_keyword(self, input_tokens: List[str], keyword: str, clean_input: str) -> float:
         """
-        Calcula a pontuação de compatibilidade entre a mensagem do aluno e as palavras-chave de uma intenção.
-        Combina busca exata de expressões/palavras com busca aproximada (fuzzy matching).
+        Mecanismo de Scoring:
+        Calcula a precisão de um keyword contra a entrada do usuário.
+        Atribui pesos substancialmente maiores para keywords longas (Intent Específica)
+        em detrimento de keywords curtas (Intent Abrangente).
         """
-        best_score = 0.0
-        matched_keyword = None
+        norm_kw = self.normalize_text(keyword)
+        if not norm_kw:
+            return 0.0
 
-        for raw_kw in keywords:
-            norm_kw = self.normalize_text(raw_kw)
-            if not norm_kw:
-                continue
+        kw_tokens = norm_kw.split()
+        kw_length = len(kw_tokens)
+        
+        # Bônus estrutural: intenções longas e específicas valem mais se corresponderem.
+        # Ex: "como fazer matricula" (3 tokens) vs "matricula" (1 token)
+        weight_multiplier = 1.0 + (kw_length * 0.15) 
 
-            kw_tokens = norm_kw.split()
+        # 1. Correspondência exata da string (Highest Priority)
+        pattern = r"\b" + re.escape(norm_kw) + r"\b"
+        if re.search(pattern, clean_input):
+            return 1.0 * weight_multiplier
 
-            # 1. Correspondência exata de expressão ou palavra inteira no texto
-            pattern = r"\b" + re.escape(norm_kw) + r"\b"
-            if re.search(pattern, clean_input):
-                # Expressões com mais palavras têm leve prioridade sobre palavras isoladas
-                score = 1.0 + min(len(kw_tokens) * 0.05, 0.20)
-                if score > best_score:
-                    best_score = score
-                    matched_keyword = raw_kw
-                continue
+        # 2. Correspondência Aproximada (Fuzzy Matching para erros ortográficos)
+        best_fuzzy_score = 0.0
+        
+        # Single-token fuzzy matching
+        if kw_length == 1:
+            if len(norm_kw) < 4:  # Previne falsos positivos em palavras curtas
+                return 0.0
+            for token in input_tokens:
+                if len(token) >= 4:
+                    sim = self._calculate_similarity(token, norm_kw)
+                    if sim >= self.fuzzy_threshold and sim > best_fuzzy_score:
+                        best_fuzzy_score = sim
+            return best_fuzzy_score * weight_multiplier
 
-            # 2. Busca aproximada (Fuzzy Matching) para tolerar erros de digitação (ex: "matríclua" -> "matricula")
-            if len(kw_tokens) == 1:
-                for token in input_tokens:
-                    # Evita comparar palavras muito curtas por fuzzy para não gerar falsos positivos
-                    if len(token) < 4 or len(norm_kw) < 4:
-                        continue
-                    sim = self._similarity(token, norm_kw)
-                    if sim >= self.fuzzy_threshold and sim > best_score:
-                        best_score = sim
-                        matched_keyword = raw_kw
-            else:
-                # Para palavras-chave compostas (ex: "historico escolar"), compara com janelas do texto (n-grams)
-                n = len(kw_tokens)
-                if len(input_tokens) >= n:
-                    for i in range(len(input_tokens) - n + 1):
-                        window = " ".join(input_tokens[i : i + n])
-                        sim = self._similarity(window, norm_kw)
-                        if sim >= self.fuzzy_threshold and (sim + 0.05) > best_score:
-                            best_score = sim + 0.05
-                            matched_keyword = raw_kw
+        # Multi-token (n-gram) fuzzy matching
+        if len(input_tokens) >= kw_length:
+            n = kw_length
+            for i in range(len(input_tokens) - n + 1):
+                window = " ".join(input_tokens[i : i + n])
+                sim = self._calculate_similarity(window, norm_kw)
+                if sim >= (self.fuzzy_threshold - 0.05):  # Ligeira tolerância para blocos de texto
+                    if sim > best_fuzzy_score:
+                        best_fuzzy_score = sim
+            return best_fuzzy_score * weight_multiplier
 
-        return {"score": best_score, "matched_keyword": matched_keyword}
+        return 0.0
 
     def process_message(self, user_message: str) -> Dict[str, Any]:
         """
-        Recebe a frase crua do aluno, limpa o texto, compara com a Base de Dados
-        e retorna a resposta correspondente ou a mensagem de fallback.
+        Orquestrador de Resposta. Analisa a entrada, aplica o Scoring Algorithm
+        em todas as intenções e resolve o contexto vencedor.
         """
-        self._load_knowledge_base()
-
         clean_input = self.normalize_text(user_message)
-        bot_info = self.knowledge_base.get("bot_info", {})
-        fallback_msg = bot_info.get(
-            "fallback_message",
-            "Não entendi sua dúvida. Entre em contato com a Secretaria pelo telefone (67) 3345-7000.",
-        )
+        bot_info = self._knowledge_base.get("bot_info", {})
+        fallback_msg = bot_info.get("fallback_message", "Erro de sistema. Contate a secretaria.")
 
         if not clean_input:
-            return {
-                "intent_id": "fallback",
-                "category": "Não identificado",
-                "response": fallback_msg,
-                "confidence": 0.0,
-                "matched_keyword": None,
-                "normalized_input": "",
-            }
+            return self._build_response_payload("fallback", "Atendimento Humano", fallback_msg, 0.0, None, "")
 
         input_tokens = clean_input.split()
+        
         best_intent = None
         highest_score = 0.0
-        best_keyword = None
+        matched_keyword = None
 
-        for intent in self.knowledge_base.get("intents", []):
-            keywords = intent.get("keywords", [])
-            result = self._score_intent(clean_input, input_tokens, keywords)
+        # Varredura Completa na Base de Conhecimento
+        for intent in self._knowledge_base.get("intents", []):
+            for keyword in intent.get("keywords", []):
+                score = self._score_keyword(input_tokens, keyword, clean_input)
+                
+                # Resolução de Desambiguação (Quem obteve a maior pontuação ponderada?)
+                if score > highest_score:
+                    highest_score = score
+                    best_intent = intent
+                    matched_keyword = keyword
 
-            if result["score"] > highest_score:
-                highest_score = result["score"]
-                best_intent = intent
-                best_keyword = result["matched_keyword"]
+        # Threshold base para validar se a IA realmente entendeu a requisição (0.8 mínimo ponderado)
+        if best_intent and highest_score >= 0.8:
+            return self._build_response_payload(
+                intent_id=best_intent.get("id", "unk"),
+                category=best_intent.get("category", "Geral"),
+                response=best_intent.get("response", ""),
+                confidence=round(min(highest_score, 1.0), 2),
+                matched_kw=matched_keyword,
+                norm_input=clean_input
+            )
 
-        if best_intent and highest_score >= self.fuzzy_threshold:
-            return {
-                "intent_id": best_intent.get("id"),
-                "category": best_intent.get("category", "Geral"),
-                "response": best_intent.get("response"),
-                "confidence": round(min(highest_score, 1.0), 2),
-                "matched_keyword": best_keyword,
-                "normalized_input": clean_input,
-            }
+        # Fallback Trigger (Não atingiu confiança suficiente)
+        return self._build_response_payload("fallback", "Encaminhamento", fallback_msg, 0.0, None, clean_input)
 
+    def _build_response_payload(self, intent_id: str, category: str, response: str, 
+                                confidence: float, matched_kw: Optional[str], norm_input: str) -> Dict[str, Any]:
+        """Formata o Payload de saída seguindo os contratos do FastAPI."""
         return {
-            "intent_id": "fallback",
-            "category": "Atendimento Humano / Fallback",
-            "response": fallback_msg,
-            "confidence": 0.0,
-            "matched_keyword": None,
-            "normalized_input": clean_input,
+            "intent_id": intent_id,
+            "category": category,
+            "response": response,
+            "confidence": confidence,
+            "matched_keyword": matched_kw,
+            "normalized_input": norm_input,
         }
 
     def get_public_metadata(self) -> Dict[str, Any]:
-        """Retorna informações públicas do bot e categorias disponíveis para sugerir na interface."""
-        self._load_knowledge_base()
-        bot_info = self.knowledge_base.get("bot_info", {})
-        categories = [
-            {
-                "id": intent.get("id"),
-                "category": intent.get("category"),
-                "sample_keyword": intent.get("keywords", [""])[0],
-            }
-            for intent in self.knowledge_base.get("intents", [])
-            if intent.get("id") not in ("saudacao", "agradecimento")
-        ]
+        """Exporta metadados essenciais para inicialização do frontend."""
+        bot_info = self._knowledge_base.get("bot_info", {})
         return {
             "bot_name": bot_info.get("name", "Assistente Acadêmico UFMS"),
-            "welcome_message": bot_info.get("welcome_message", "Olá! Como posso ajudar?"),
-            "topics": categories,
+            "welcome_message": bot_info.get("welcome_message", "")
         }
-
